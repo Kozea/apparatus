@@ -5,3 +5,4 @@ cutter
 pytest
 selenium
 pyvirtualdisplay
+pynuts
