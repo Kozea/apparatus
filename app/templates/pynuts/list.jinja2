@@ -1,0 +1,14 @@
+{% showonmatch 'div a' %}
+  <div class="list-group">
+    {%- for view in views %}
+      {% set url = view.action_url_for(action or 'read', **ctx_args) -%}
+      <a class="list-group-item" {{ 'href="' + url + '"' if url }}>
+        {{ view.list_form[view.list_column] | data }}
+      </a>
+    {%- endfor %}
+  </div>
+{%- else -%}
+  {%- if no_result_message -%}
+    <p>{{ no_result_message }}</p>
+  {%- endif -%}
+{% endshowonmatch %}

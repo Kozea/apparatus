@@ -1,0 +1,10 @@
+<div class="well">
+  <dl class="dl-horizontal">
+    {%- for field in view.read_fields %}
+      {%- if field.widget.input_type != 'hidden' %}
+        <dt>{{ field.label.text }}</dt>
+        <dd>{{ field | data }}</dd>
+      {%- endif %}
+    {% endfor %}
+  </dl>
+</div>

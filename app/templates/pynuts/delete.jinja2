@@ -1,0 +1,5 @@
+<form class="form-inline" {% if action %} action="{{ action }}" {% endif %} method="post" enctype="multipart/form-data">
+  <p>Do you really want to delete <strong>{{ view.name }}</strong>?</p>
+  <input class="btn btn-danger" type="submit" value="Yes">
+  <a class="btn btn-default" href="javascript:window.history.go(-1)">No</a>
+</form>
