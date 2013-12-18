@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-host = 'apparatus.l'
+host = '0.0.0.0'
 port = 2001
-url = "http://%s:%d/*" % (host, port)
+url = "http://*:%d/*" % port
 
 from log_colorizer import colorize
 colorize()
@@ -42,7 +42,8 @@ else:
 
     files = ['app/static/javascripts/*',
              'app/static/stylesheets/*',
-             'app/templates/*']
+             'app/templates/*',
+             'app/templates/*/*']
     watch({'url': url}, files, unwatch_at_exit=True)
 
 app.run(

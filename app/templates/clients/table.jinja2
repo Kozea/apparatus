@@ -2,7 +2,7 @@
 
 {% block main %}
   <header class="page-header">
-    <h1>Manage Clients <small>Table</small></h1>
+    <h1>Manage {{ view_class._name }}s <small>Table</small></h1>
   </header>
   {{ view_class.view_table() }}
 {% endblock main %}

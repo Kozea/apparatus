@@ -2,7 +2,7 @@
 
 {% block main %}
   <header class="page-header">
-    <h1>View clients <small>List</small></h1>
+    <h1>View {{ view_class._name }}s <small>List</small></h1>
   </header>
   {{ view_class.view_list() }}
 {% endblock main %}

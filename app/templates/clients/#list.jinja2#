@@ -1,8 +1,0 @@
-{%- extends "_base.jinja2" -%}
-
-{% block main %}
-  <header class="page-header">
-    <h1>View Clients <small>List</small></h1>
-  </header>
-  {{ view_class.view_list() }}
-{% endblock main %}

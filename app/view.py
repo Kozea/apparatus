@@ -3,6 +3,7 @@ from app.model import Client, ClientType
 from wtforms import TextField, TextAreaField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import Required
+from sqlalchemy.util import classproperty
 
 
 class BaseView(nuts.ModelView):
@@ -12,6 +13,10 @@ class BaseView(nuts.ModelView):
     view_read_template = 'pynuts/read.jinja2'
     view_update_template = 'pynuts/update.jinja2'
     view_delete_template = 'pynuts/delete.jinja2'
+
+    @classproperty
+    def _name(cls):
+        return cls.__name__.replace('View', '')
 
 
 class BaseForm(object):

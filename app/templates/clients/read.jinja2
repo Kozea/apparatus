@@ -2,7 +2,7 @@
 
 {% block main %}
   <header class="page-header">
-    <h1>{{ view.data.name }}<small>{{ view.data.type }}</small></h1>
+    <h1>{{ view.data.name }}<small>{{ view.data.type.label }}</small></h1>
   </header>
   {{ view.view_read() }}
 {% endblock main %}
