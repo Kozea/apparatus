@@ -7,32 +7,30 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Apparatus <small>with pynuts</small></a>
+      <span class="navbar-brand">Apparatus <small>with pynuts</small></span>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li {{ 'class="active"' if request.endpoint == 'index'  }}><a href="{{ url_for('index') }}">Index</a></li>
-        {% for name, view in nuts.views.items() %}
-          <li class="dropdown">
+        {% for name, view in nuts.views.items() | sort(0) %}
+          <li class="dropdown{{ ' active' if request.path.startswith('/' + view._name.lower()) }}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name.replace('View', '') }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              {% for name, view in nuts.views.items() %}
-                {% for action_no_id in ('list', 'table', 'create') %}
-                  {% set url = view.action_url_for(action_no_id) %}
+              {% for action_no_id in ('list', 'table', 'create') %}
+                {% set url = view.action_url_for(action_no_id) %}
+                {% if url %}
+                  <li {{ 'class="active"' if url == request.path }}><a href="{{ url }}">{{ action_no_id | title }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% set elements = view.query() | list %}
+              {% for action_id in ('read', 'update', 'delete') %}
+                <li class="divider"></li>
+                <li class="dropdown-header">{{ action_id | title }}</li>
+                {% for element in elements %}
+                  {% set url = view.action_url_for(action_id, **element.primary_keys) %}
                   {% if url %}
-                    <li {{ 'class="active"' if url == request.path }}><a href="{{ url }}">{{ action_no_id | title }}</a></li>
+                    <li {{ 'class="active"' if url == request.path }}><a href="{{ url }}">{{ element.name or element.label }}</a></li>
                   {% endif %}
-                {% endfor %}
-                {% set elements = view.query() | list %}
-                {% for action_id in ('read', 'update', 'delete') %}
-                  <li class="divider"></li>
-                  <li class="dropdown-header">{{ action_id | title }}</li>
-                  {% for element in elements %}
-                    {% set url = view.action_url_for(action_id, **element.primary_keys) %}
-                    {% if url %}
-                      <li {{ 'class="active"' if url == request.path }}><a href="{{ url }}">{{ element.name or element.label }}</a></li>
-                    {% endif %}
-                  {% endfor %}
                 {% endfor %}
               {% endfor %}
             </ul>

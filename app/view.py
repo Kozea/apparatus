@@ -1,8 +1,10 @@
 from app import nuts
-from app.model import Client, ClientType
-from wtforms import TextField, TextAreaField
+from app.model import Client, ClientType, Person
+from wtforms import (TextField, TextAreaField,
+                     PasswordField, DateField, SelectField)
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.validators import Required
+from wtforms.validators import Required, Optional
+from wtforms.widgets import PasswordInput
 from sqlalchemy.util import classproperty
 
 
@@ -27,16 +29,44 @@ class ClientView(BaseView):
     model = Client
 
     _cols = ('name', 'address', 'zip', 'city', 'type')
+    list_column = 'name'
     table_columns = _cols
     create_columns = _cols
     read_columns = _cols
     update_columns = _cols
-    list_column = 'name'
 
     class Form(BaseForm):
-        name = TextField('Nom', validators=[Required()])
-        address = TextAreaField('Adresse', validators=[Required()])
-        zip = TextField('Code postal', validators=[Required()])
-        city = TextField('Ville', validators=[Required()])
+        name = TextField('Name', validators=[Required()])
+        address = TextAreaField('Address', validators=[Required()])
+        zip = TextField('Area code', validators=[Required()])
+        city = TextField('City', validators=[Required()])
         type = QuerySelectField(
             'Type', get_label='label', query_factory=lambda: ClientType.query)
+
+
+class PersonView(BaseView):
+    model = Person
+
+    _cols = ('name', 'firstname', 'login', 'password',
+             'email', 'gender', 'birthdate')
+    list_column = 'name'
+    table_columns = _cols
+    create_columns = _cols
+    read_columns = _cols
+    update_columns = _cols
+
+    class Form(BaseForm):
+        name = TextField(
+            'Name', validators=[Required()])
+        firstname = TextField('Firstname', validators=[Required()])
+        login = TextField('Login', validators=[Required()])
+        password = PasswordField(
+            'Password', validators=[Required()],
+            # /!\ This is for testing purpose only !
+            widget=PasswordInput(False))
+        email = TextField('Email', validators=[Required()])
+        gender = SelectField(
+            'Gender', choices=(('Man', 'Man'), ('Woman', 'Woman')),
+            validators=[Required()])
+        birthdate = DateField(
+            'Birthdate', format='%d/%m/%Y', validators=[Optional()])

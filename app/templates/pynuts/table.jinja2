@@ -20,22 +20,24 @@
             {{ view.table_form[column] | data }}
           </td>
         {%- endfor %}
-        {%- if not no_default_actions %}
-          {%- if read_url %}
-            <td><a href="{{ read_url }}">View</a></td>
-          {%- endif %}
-          {%- if update_url %}
-            <td><a href="{{ update_url }}">Edit</a></td>
-          {%- endif %}
-          {%- if delete_url %}
-            <td><a href="{{ delete_url }}">Delete</a></td>
-          {%- endif %}
-        {% endif %}
-        {% for action in actions(view) %}
-          {% if action.url %}
-            <td><a href="{{ action.url }}">{{ action.label }}</a></td>
-          {% endif %}
-        {% endfor %}
+          <td>
+            {%- if not no_default_actions %}
+              {%- if read_url %}
+                <a href="{{ read_url }}">View</a>
+              {%- endif %}
+              {%- if update_url %}
+                <a href="{{ update_url }}">Edit</a>
+              {%- endif %}
+              {%- if delete_url %}
+                <a href="{{ delete_url }}">Delete</a>
+              {%- endif %}
+            {% endif %}
+            {% for action in actions(view) %}
+              {% if action.url %}
+                <a href="{{ action.url }}">{{ action.label }}</a>
+              {% endif %}
+            {% endfor %}
+          </td>
       </tr>
       {% if loop.last %}
         </tbody>

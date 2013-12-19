@@ -2,7 +2,7 @@
 
 {% block main %}
   <header class="page-header">
-    <h1>New {{ view._name }} <small>Create</small></h1>
+    <h1>{{ view._name }} <small>Read</small></h1>
   </header>
-  {{ view.view_create() }}
+  {{ view.view_read() }}
 {% endblock main %}

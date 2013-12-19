@@ -7,13 +7,13 @@ insert into client (client_id, client_type_id, name, address, zip, city) values 
 insert into client (client_id, client_type_id, name, address, zip, city) values (2, 1, 'Aperture Science', 'Old salt mine', '906201', 'Upper Michigan');
 insert into client (client_id, client_type_id, name, address, zip, city) values (3, 2, 'Black Ops', 'Unknown', 'N/A', 'Somewhere in US');
 
-insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (1, 'Gordon', 'Freeman', 'gfreeman', 'crowbar', 'gfreeman@blackmesa.com', 'man', '1982-10-14');
-insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (2, 'Kleiner', 'Isaac', 'ikleiner', 'glass', 'ikleiner@blackmesa.com', 'man', '1948-03-17');
-insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (3, 'Doctor', 'Rosenberg', 'drosenberg', 'suv', 'drosenberg@blackmesa.com', 'man', '1971-11-07');
+insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (1, 'Gordon', 'Freeman', 'gfreeman', 'crowbar', 'gfreeman@blackmesa.com', 'Man', '1982-10-14');
+insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (2, 'Kleiner', 'Isaac', 'ikleiner', 'glass', 'ikleiner@blackmesa.com', 'Man', '1948-03-17');
+insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (3, 'Doctor', 'Rosenberg', 'drosenberg', 'suv', 'drosenberg@blackmesa.com', 'Man', '1971-11-07');
 
-insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (4, 'Cave', 'Johnson', 'cjohnson', 'caroline', 'cjohnson@aperture.com', 'man', '1923-10-30');
-insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (5, 'Secretary', 'Caroline', 'scaroline', 'johnson', 'caroline@aperture.com', 'woman', '1945-02-07');
-insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (6, 'Test Subject', 'Chell', 'tchell', 'TheCakeIsALie', 'tchell@aperture.com', 'woman', '1980-07-12');
+insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (4, 'Cave', 'Johnson', 'cjohnson', 'caroline', 'cjohnson@aperture.com', 'Man', '1923-10-30');
+insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (5, 'Secretary', 'Caroline', 'scaroline', 'johnson', 'caroline@aperture.com', 'Woman', '1945-02-07');
+insert into person (person_id, name, firstname, login, password, email, gender, birthdate) values (6, 'Test Subject', 'Chell', 'tchell', 'TheCakeIsALie', 'tchell@aperture.com', 'Woman', '1980-07-12');
 
 insert into role (role_id, identifier, label) values (1, 'scientist', 'Scientist');
 insert into role (role_id, identifier, label) values (2, 'scientist_leader', 'Scientist Leader');
