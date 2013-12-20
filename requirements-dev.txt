@@ -7,3 +7,4 @@ selenium
 pyvirtualdisplay
 pynuts
 psycopg2
+tears

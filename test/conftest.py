@@ -74,16 +74,9 @@ class App(Process):
         os.environ['APP_TESTING'] = 'YES'
         from app import app
 
-        def setup(*args):
-            app.db._global_transaction = app.db._mono_connection.begin()
+        signal(SIGUSR1, app.db.setup)
+        signal(SIGUSR2, app.db.teardown)
 
-        def teardown(*args):
-            app.db._global_transaction.rollback()
-
-        signal(SIGUSR1, setup)
-        signal(SIGUSR2, teardown)
-
-        app.db._global_transaction.rollback()
         app.run(
             debug=True,
             threaded=True,
