@@ -3,6 +3,7 @@ from pytest import fixture
 from multiprocessing import Process, Lock, active_children
 from signal import signal, SIGKILL, SIGUSR1, SIGUSR2
 from cutter import attr_cut
+from time import sleep
 import atexit
 import re
 import os
@@ -124,6 +125,10 @@ class ElementWrapper(object):
                 self.element.find_elements_by_css_selector(selector)))
     __call__ = find
 
+    def type(self, keys):
+        self.clear()
+        self.send_keys(keys)
+
 
 class BrowserWrapper(object):
 
@@ -158,12 +163,10 @@ def s(request, app):  # s = Selenium Browser
     return BrowserWrapper(browser)
 
 
-def pytest_unconfigure(config):
-    if display:
-        display.stop()
-
 @atexit.register
 def killall():
+    if display:
+        display.stop()
     for child in active_children():
         os.kill(child.pid, SIGKILL)
 
@@ -172,9 +175,11 @@ def killall():
 def db(request):
     for child in active_children():
         os.kill(child.pid, SIGUSR1)
+    sleep(.1)
 
     def teardown():
         for child in active_children():
             os.kill(child.pid, SIGUSR2)
+        sleep(.1)
 
     request.addfinalizer(teardown)
