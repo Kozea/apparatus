@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from multiprocessing import Process
 from subprocess import Popen
 from glob import glob
 import time
@@ -12,32 +11,23 @@ commands = [
     'python serve.py'
 ]
 
-
-class Run(Process):
-    daemon = True
-
-    def __init__(self, command, *args, **kwargs):
-        super(Run, self).__init__(*args, **kwargs)
-        self.cmd = command
-
-    def run(self):
-        try:
-            while True:
-                self.proc = Popen(shlex.split(self.cmd))
-                self.proc.wait()
-                print(self.cmd + ' exited. Relaunching in 250ms')
-                time.sleep(.25)
-        except KeyboardInterrupt:
-            pass
-
-process = [Run(cmd) for cmd in commands]
-for proc in process:
-    print('Lauching %s' % proc.cmd.split(' ')[0])
-    proc.start()
+process = {}
+for cmd in commands:
+    print('Lauching %s' % cmd)
+    process[cmd] = Popen(shlex.split(cmd))
 
 try:
-    for proc in process:
-        proc.join()
-    print('Joined')
+    while len(process):
+        for cmd, proc in list(process.items()):
+            if proc.poll():
+                print('%s has terminated.' % cmd)
+                process.pop(cmd)
+        time.sleep(0.1)
+    print('All children are dead. Time to go.')
+
 except KeyboardInterrupt:
-    print('\nGot [ctrl]+[c] -- bye bye')
+    print('\nGot [ctrl]+[c]')
+    for cmd, proc in process.items():
+        print('Killing %s' % cmd)
+        proc.kill()
+    print('Bye bye.')
