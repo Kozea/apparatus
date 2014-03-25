@@ -30,20 +30,20 @@ else:
     app.wsgi_app = WdbMiddleware(app.wsgi_app, start_disabled=True)
     werkzeug_debugger = False
 
-try:
-    from wsreload.client import monkey_patch_http_server, watch
-except ImportError:
-    app.logger.debug('wsreload not found')
-else:
-    def log(httpserver):
-        app.logger.debug('WSReloaded after server restart')
-    monkey_patch_http_server({'url': url}, callback=log)
-    app.logger.debug('HTTPServer monkey patched for url %s' % url)
+# try:
+#     from wsreload.client import monkey_patch_http_server, watch
+# except ImportError:
+#     app.logger.debug('wsreload not found')
+# else:
+#     def log(httpserver):
+#         app.logger.debug('WSReloaded after server restart')
+#     monkey_patch_http_server({'url': url}, callback=log)
+#     app.logger.debug('HTTPServer monkey patched for url %s' % url)
 
-    files = ['app/static/javascripts/',
-             'app/static/stylesheets/',
-             'app/templates/']
-    watch({'url': url}, files, unwatch_at_exit=True)
+#     files = ['app/static/javascripts/',
+#              'app/static/stylesheets/',
+#              'app/templates/']
+#     watch({'url': url}, files, unwatch_at_exit=True)
 
 app.run(
     debug=True,

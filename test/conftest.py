@@ -74,8 +74,14 @@ class App(Process):
         os.environ['APP_TESTING'] = 'YES'
         from app import app
 
-        signal(SIGUSR1, app.db.setup)
-        signal(SIGUSR2, app.db.teardown)
+        def setup(*args):
+            app.db.session.bind.setup()
+
+        def teardown(*args):
+            app.db.session.bind.teardown()
+
+        signal(SIGUSR1, setup)
+        signal(SIGUSR2, teardown)
 
         app.run(
             debug=True,

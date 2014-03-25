@@ -3,9 +3,9 @@ from pynuts import Pynuts
 from app.config import default
 import os
 if os.environ.get('APP_TESTING'):
-    from tears import SQLAlchemy
-else:
-    from flask_sqlalchemy import SQLAlchemy
+    import tears
+
+from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
