@@ -1,11 +1,19 @@
+export PROJECT_NAME = reactest
+export STATIC_SERVER = localhost:3000
+export FLASK_APP = reactest.backend
+export FLASK_CONFIG = $(PWD)/$(PROJECT_NAME)/backend/application.cfg
+export FLASK_DEBUG = 1
+
+# Python env
 VENV = $(PWD)/.env
 PIP = $(VENV)/bin/pip
 PYTHON = $(VENV)/bin/python
+PYTEST = $(VENV)/bin/py.test
+FLASK = $(VENV)/bin/flask
+
+# Node env
 NPM ?= yarn
 
-export PROJECT_NAME = reactest
-export STATIC_SERVER = localhost:3000
-export FLASK_CONFIG = $(PWD)/$(PROJECT_NAME)/backend/application.cfg
 
 all: install serve
 
@@ -14,7 +22,7 @@ install-node:
 
 install-python:
 	test -d $(VENV) || virtualenv $(VENV)
-	$(PIP) install --upgrade --no-cache -e .
+	$(PIP) install --upgrade --no-cache -e .[test]
 
 install: install-node install-python
 
@@ -24,19 +32,31 @@ clean:
 clean-install: clean
 	rm -fr node_modules
 
-lint:
+lint-python:
+	$(PYTEST) --flake8 -m flake8 reactest
+	$(PYTEST) --isort -m isort reactest
+
+lint-node:
 	$(NPM) run lint
+
+lint: lint-python lint-node
+
+check-python:
+	$(PYTEST) reactest
+
+check-node:
+	jest
+
+check: check-python check-node
 
 build: clean lint
 	NODE_ENV=production $(NPM) run build
 
-SERVE_PYTHON = $(PYTHON) $(PROJECT_NAME)/backend/__init__.py
 serve-python:
-	$(SERVE_PYTHON)
+	$(FLASK) run
 
-SERVE_STATIC = $(NPM) run start
 serve-static:
-	$(SERVE_STATIC)
+	$(NPM) run start
 
 serve:
-	($(SERVE_PYTHON)) & ($(SERVE_STATIC)) & wait
+	set -m; (($(FLASK) run; kill 0)& ($(NPM) run start; kill 0)& wait)

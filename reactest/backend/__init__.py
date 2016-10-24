@@ -1,7 +1,7 @@
 import os
 
 import pkg_resources
-from flask import Flask, render_template
+from flask import Flask
 
 __version__ = pkg_resources.require("reactest")[0].version
 
@@ -11,10 +11,4 @@ if app.debug:
     app.config['STATIC_SERVER'] = 'http://' + os.getenv('STATIC_SERVER')
 
 
-@app.route("/")
-def index():
-    return render_template("index.jinja2")
-
-
-if __name__ == '__main__':
-    app.run()
+from .routes import *  # noqa

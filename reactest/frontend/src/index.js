@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 const rootEl = document.getElementById('root');
+
 ReactDOM.render(
   <AppContainer>
     <App />
@@ -11,6 +12,7 @@ ReactDOM.render(
   rootEl
 );
 
+// Hot Module Replacement API
 if (module.hot) {
   module.hot.accept('./App', () => {
     // If you use Webpack 2 in ES modules mode, you can
