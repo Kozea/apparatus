@@ -11,8 +11,10 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-pacomo": "^0.5.3"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",

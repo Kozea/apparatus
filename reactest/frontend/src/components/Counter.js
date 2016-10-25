@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import {pacomoClass} from '../utils'
 
-export default class Counter extends Component {
+
+@pacomoClass
+class Counter extends Component {
   constructor(props) {
     super(props);
     this.state = { counter: +document.body.getAttribute('data-count') };
@@ -30,9 +33,11 @@ export default class Counter extends Component {
   render() {
     return (
       <div>
-        <h2>Counter: <span className="count">{this.state.counter}</span></h2>
-        <button onClick={this.handleClick}>Reset</button>
+        <h2>Counter: <span className='count'>{this.state.counter}</span></h2>
+        <button className='button' onClick={this.handleClick}>Reset</button>
       </div>
    );
   }
-}
+};
+
+export default Counter;
