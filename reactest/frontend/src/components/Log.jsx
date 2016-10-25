@@ -3,7 +3,9 @@ import {pacomo} from '../utils'
 
 
 @pacomo
-class Log extends Component {
+export default class Log extends Component {
+  static displayName = 'Log machine'
+
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -33,5 +35,3 @@ class Log extends Component {
    );
   }
 };
-
-export default Log;

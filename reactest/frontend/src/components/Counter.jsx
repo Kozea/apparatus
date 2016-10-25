@@ -3,7 +3,7 @@ import {pacomo} from '../utils'
 
 
 @pacomo
-class Counter extends Component {
+export default class Counter extends Component {
   constructor(props) {
     super(props);
     this.state = { counter: +document.body.getAttribute('data-count') };
@@ -39,5 +39,3 @@ class Counter extends Component {
    );
   }
 };
-
-export default Counter;
