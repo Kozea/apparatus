@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "start": "node static-dev-server.js",
-    "build": "./node_modules/webpack/bin/webpack.js --progress --profile --colors",
-    "lint": "eslint frontend",
+    "build": "webpack --progress --profile --colors",
+    "lint": "eslint --ext .jsx --ext .js reactest/frontend/src/",
     "test": "jest"
   },
   "main": "index.js",
