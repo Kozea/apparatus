@@ -1,6 +1,7 @@
 // Imports
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Getting static server bind from environment
 var staticServer = process.env.STATIC_SERVER || 'localhost:8000';
@@ -24,7 +25,7 @@ module.exports = {
       'webpack/hot/only-dev-server',
     ] : []).concat([
     // This is the entry point
-    './reactest/frontend/src/index'
+    './reactest/frontend/src/index.jsx'
   ]),
 
   // Defines the output file for the html script tag
@@ -34,17 +35,23 @@ module.exports = {
     publicPath: publicPath
   },
 
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   // Entry points list, allow to load a file with transforms
   module: {
     loaders: [
       {
         // js files are loaded through babel (see .babelrc)
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ['babel'],
         include: path.join(__dirname, 'reactest', 'frontend', 'src')
       }, {
         test: /\.sass$/i,
-        loaders: ['style', 'css?sourceMap', 'sass?indentedSyntax&sourceMap']
+        loaders: DEBUG ?
+          ['style', 'css?sourceMap', 'sass?indentedSyntax&sourceMap']
+          : ExtractTextPlugin.extract(
+            'style-loader', 'css-loader', 'sass-loader')
       }
     ]
   },
@@ -60,8 +67,11 @@ module.exports = {
   },
 
   // Webpack plugin list
-  plugins: [
-    // Allow hot module replacement
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  plugins: DEBUG ?
+    [
+      // Allow hot module replacement
+      new webpack.HotModuleReplacementPlugin()
+    ] : [
+      new ExtractTextPlugin('style.css', {allChunks: false}),
+    ]
 };

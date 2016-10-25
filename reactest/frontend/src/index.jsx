@@ -15,10 +15,10 @@ ReactDOM.render(
 
 // Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept('./components/App', () => {
+  module.hot.accept('./components/App.jsx', () => {
     // If you use Webpack 2 in ES modules mode, you can
     // use <App /> here rather than require() a <NextApp />.
-    const NextApp = require('./components/App').default;
+    const NextApp = require('./components/App.jsx').default;
     ReactDOM.render(
       <AppContainer>
         <NextApp />
