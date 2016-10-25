@@ -4,7 +4,7 @@ import {pacomo} from '../utils'
 
 @pacomo
 export default class Log extends Component {
-  static displayName = 'Log machine'
+  // static displayName = 'Log'
 
   constructor(props) {
     super(props);

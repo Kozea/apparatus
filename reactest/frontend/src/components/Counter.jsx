@@ -6,7 +6,7 @@ import {pacomo} from '../utils'
 export default class Counter extends Component {
   constructor(props) {
     super(props);
-    this.state = { counter: +document.body.getAttribute('data-count') };
+    this.state = { counter: this.props.start };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -26,7 +26,7 @@ export default class Counter extends Component {
 
   handleClick(e) {
     this.setState({
-      counter: +document.body.getAttribute('data-count')
+      counter: this.props.start
     });
   }
 

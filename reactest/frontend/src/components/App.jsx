@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <Layout>
-        <Counter />
+        <Counter start={+document.body.getAttribute('data-count')} />
         <Log />
       </Layout>
     );

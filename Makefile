@@ -45,7 +45,7 @@ check-python:
 	$(PYTEST) reactest
 
 check-node:
-	jest
+	$(NPM) run test
 
 check: check-python check-node
 

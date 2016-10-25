@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node static-dev-server.js",
     "build": "./node_modules/webpack/bin/webpack.js --progress --profile --colors",
-    "lint": "eslint frontend"
+    "lint": "eslint frontend",
+    "test": "jest"
   },
   "main": "index.js",
   "license": "MIT",
@@ -18,17 +19,22 @@
   "devDependencies": {
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
+    "babel-jest": "^16.0.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "css-loader": "^0.25.0",
+    "enzyme": "^2.5.1",
     "eslint": "^3.8.1",
     "eslint-plugin-react": "^6.4.1",
     "extract-text-webpack-plugin": "2.0.0-beta.4",
+    "jest": "^16.0.2",
     "node-sass": "^3.10.1",
+    "react-addons-test-utils": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.6",
+    "react-test-renderer": "^15.3.2",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^2.1.0-beta.25",
