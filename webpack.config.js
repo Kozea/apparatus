@@ -40,7 +40,6 @@ module.exports = {
       {
         // js files are loaded through babel (see .babelrc)
         test: /\.js$/,
-        exclude: /node_modules/,
         loaders: ['babel'],
         include: path.join(__dirname, 'reactest', 'frontend', 'src')
       }, {

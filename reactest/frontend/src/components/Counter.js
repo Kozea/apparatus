@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {pacomoClass} from '../utils'
+import {pacomo} from '../utils'
 
 
-@pacomoClass
+@pacomo
 class Counter extends Component {
   constructor(props) {
     super(props);
