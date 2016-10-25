@@ -9,6 +9,8 @@ app = Flask(__name__)
 app.config.from_pyfile(os.getenv('FLASK_CONFIG'))
 if app.debug:
     app.config['STATIC_SERVER'] = 'http://' + os.getenv('STATIC_SERVER')
+app.static_folder = os.path.join(
+    os.path.dirname(__file__), '..', 'frontend', 'static')
 
 
 from .routes import *  # noqa

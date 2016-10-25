@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node static-dev-server.js",
-    "build": "./node_modules/webpack/bin/webpack.js -p --progress --profile --colors",
+    "build": "./node_modules/webpack/bin/webpack.js --progress --profile --colors",
     "lint": "eslint frontend"
   },
   "main": "index.js",
@@ -26,7 +26,7 @@
     "css-loader": "^0.25.0",
     "eslint": "^3.8.1",
     "eslint-plugin-react": "^6.4.1",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "2.0.0-beta.4",
     "node-sass": "^3.10.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "sass-loader": "^4.0.2",

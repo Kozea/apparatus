@@ -52,6 +52,10 @@ check: check-python check-node
 build: clean lint
 	NODE_ENV=production $(NPM) run build
 
+serve-python-with-static:
+	# Allow to test static build
+	STATIC_SERVER= FLASK_DEBUG= $(FLASK) run
+
 serve-python:
 	$(FLASK) run
 

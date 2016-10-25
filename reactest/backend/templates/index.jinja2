@@ -2,6 +2,9 @@
 <html>
   <head>
     <title>Reactest</title>
+    {% if not config.get('STATIC_SERVER', '') %}
+      <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
+    {% endif %}
   </head>
   <body data-count="{{ count }}">
     <div id="root">

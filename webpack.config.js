@@ -50,8 +50,10 @@ module.exports = {
         test: /\.sass$/i,
         loaders: DEBUG ?
           ['style', 'css?sourceMap', 'sass?indentedSyntax&sourceMap']
-          : ExtractTextPlugin.extract(
-            'style-loader', 'css-loader', 'sass-loader')
+          : ExtractTextPlugin.extract({
+                fallbackLoader: 'style-loader',
+                loader: ['css-loader', 'sass-loader']
+            })
       }
     ]
   },
@@ -72,6 +74,14 @@ module.exports = {
       // Allow hot module replacement
       new webpack.HotModuleReplacementPlugin()
     ] : [
-      new ExtractTextPlugin('style.css', {allChunks: false}),
+      new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'}),
+      new ExtractTextPlugin({filename: 'style.css'}),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        compressor: {screw_ie8: true, keep_fnames: true, warnings: false},
+        mangle: {screw_ie8: true, keep_fnames: true}
+      }),
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.optimize.AggressiveMergingPlugin(),
     ]
 };
