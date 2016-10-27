@@ -1,29 +1,46 @@
-import { AppContainer } from 'react-hot-loader';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
-import './index.sass';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import createLogger from 'redux-logger'
+import thunk from 'redux-thunk'
+import reactest from './reducers'
+import App from './components/App'
+import './index.sass'
 
-const rootEl = document.getElementById('root');
+const logger = createLogger()
 
-ReactDOM.render(
-  <AppContainer>
-    <App />
-  </AppContainer>,
-  rootEl
-);
+let store = createStore(reactest, applyMiddleware(thunk, logger))
 
-// Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept('./components/App.jsx', () => {
-    // If you use Webpack 2 in ES modules mode, you can
-    // use <App /> here rather than require() a <NextApp />.
-    const NextApp = require('./components/App.jsx').default;
-    ReactDOM.render(
-      <AppContainer>
-        <NextApp />
-      </AppContainer>,
-      rootEl
-    );
-  });
+let render = () => {
+  const App = require('./components/App').default
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root')
+  )
 }
+
+if (module.hot) {
+  const renderApp = render
+  const renderError = (error) => {
+    const RedBox = require('redbox-react')
+    ReactDOM.render(
+      <RedBox error={error} />,
+      document.getElementById('root')
+    )
+  }
+  render = () => {
+    try {
+      renderApp()
+    } catch (error) {
+      renderError(error)
+    }
+    module.hot.accept('./components/App', () => {
+      setTimeout(render)
+    })
+  }
+}
+
+render()

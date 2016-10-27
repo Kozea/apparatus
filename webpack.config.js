@@ -19,7 +19,6 @@ module.exports = {
 
   // Application entry points
   entry: (DEBUG ? [    // These defines hooks for hot reloading
-      'react-hot-loader/patch',
       'webpack-dev-server/client?' + staticServer,
       'webpack/hot/only-dev-server',
     ] : []).concat([

@@ -1,42 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { pacomo } from '../utils'
+import store from '../index.jsx'
+import './Counter.sass'
 
 
 @pacomo.decorator
 export default class Counter extends Component {
   constructor(props) {
-    super(props);
-    this.state = { counter: this.props.start };
+    super(props)
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.tick.bind(this), 1000);
-  }
-
-  tick() {
-    this.props.onUpdate(`Counter gone from ${this.state.counter} to ${this.state.counter + 1}`)
-    this.setState(state => ({
-      counter: state.counter + 1
-    }));
+    this.props.onStartCounter()
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  handleClick(e) {
-    this.props.onUpdate(`Counter reset from ${this.state.counter} to ${this.props.start}`)
-    this.setState((state, props) => ({
-      counter: props.start
-    }));
+    this.props.onStopCounter()
   }
 
   render() {
     return (
       <div>
-        <h2>Counter: <span className='count'>{this.state.counter}</span></h2>
-        <button className='button' onClick={(e) => this.handleClick(e)}>Reset</button>
+        <h2>Counter: <span className='count'>{this.props.count}</span></h2>
+        <button className='button' onClick={() => this.props.onResetClick()}>Reset</button>
       </div>
-   );
+   )
   }
-};
+}
