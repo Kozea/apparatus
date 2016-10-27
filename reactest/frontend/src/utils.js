@@ -1,6 +1,4 @@
 import { withPackageName } from 'react-pacomo';
-const {
-  decorator: pacomo, transformer: pacomoComponent
-} = withPackageName('reactest');
+const pacomo = withPackageName('reactest');
 
-export { pacomo, pacomoComponent };
+export { pacomo };

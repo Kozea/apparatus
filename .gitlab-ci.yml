@@ -21,4 +21,5 @@ lint:
   script: make
 
 test:
+  stage: test
   script: make check

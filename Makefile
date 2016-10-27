@@ -1,5 +1,5 @@
 export PROJECT_NAME = reactest
-export STATIC_SERVER = localhost:3000
+export STATIC_SERVER = http://localhost:3000
 export FLASK_APP = reactest.backend
 export FLASK_CONFIG = $(PWD)/$(PROJECT_NAME)/backend/application.cfg
 export FLASK_DEBUG = 1
@@ -54,7 +54,7 @@ build: clean lint
 
 serve-python-with-static:
 	# Allow to test static build
-	STATIC_SERVER= FLASK_DEBUG= $(FLASK) run
+	STATIC_SERVER= $(FLASK) run
 
 serve-python:
 	$(FLASK) run

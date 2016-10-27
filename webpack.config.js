@@ -4,10 +4,9 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Getting static server bind from environment
-var staticServer = process.env.STATIC_SERVER || 'localhost:8000';
-var [bind, port] = staticServer.split(':');
-var staticUrl = `http://${staticServer}`;
-var publicPath = staticUrl + '/static/';
+var staticServer = process.env.STATIC_SERVER || 'http://localhost:8000';
+var [bind, port] = staticServer.split('//')[1].split(':');
+var publicPath = staticServer + '/static/';
 
 // Check production status
 // Production is used when building
@@ -21,7 +20,7 @@ module.exports = {
   // Application entry points
   entry: (DEBUG ? [    // These defines hooks for hot reloading
       'react-hot-loader/patch',
-      'webpack-dev-server/client?' + staticUrl,
+      'webpack-dev-server/client?' + staticServer,
       'webpack/hot/only-dev-server',
     ] : []).concat([
     // This is the entry point

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import {pacomo} from '../utils'
+import { pacomo } from '../utils'
 
 
-@pacomo
+@pacomo.decorator
 export default class Counter extends Component {
   constructor(props) {
     super(props);
     this.state = { counter: this.props.start };
-    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -15,9 +14,10 @@ export default class Counter extends Component {
   }
 
   tick() {
-    this.setState({
-      counter: this.state.counter + 1
-    });
+    this.props.onUpdate(`Counter gone from ${this.state.counter} to ${this.state.counter + 1}`)
+    this.setState(state => ({
+      counter: state.counter + 1
+    }));
   }
 
   componentWillUnmount() {
@@ -25,16 +25,17 @@ export default class Counter extends Component {
   }
 
   handleClick(e) {
-    this.setState({
-      counter: this.props.start
-    });
+    this.props.onUpdate(`Counter reset from ${this.state.counter} to ${this.props.start}`)
+    this.setState((state, props) => ({
+      counter: props.start
+    }));
   }
 
   render() {
     return (
       <div>
         <h2>Counter: <span className='count'>{this.state.counter}</span></h2>
-        <button className='button' onClick={this.handleClick}>Reset</button>
+        <button className='button' onClick={(e) => this.handleClick(e)}>Reset</button>
       </div>
    );
   }

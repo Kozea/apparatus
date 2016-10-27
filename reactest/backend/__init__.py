@@ -7,8 +7,8 @@ __version__ = pkg_resources.require("reactest")[0].version
 
 app = Flask(__name__)
 app.config.from_pyfile(os.getenv('FLASK_CONFIG'))
-if app.debug:
-    app.config['STATIC_SERVER'] = 'http://' + os.getenv('STATIC_SERVER')
+app.config['STATIC_SERVER'] = os.getenv('STATIC_SERVER')
+
 app.static_folder = os.path.join(
     os.path.dirname(__file__), '..', 'frontend', 'static')
 
