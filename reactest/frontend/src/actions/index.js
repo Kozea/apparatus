@@ -1,4 +1,4 @@
-let logSerial = 0, tid = null
+let tid = null
 
 export const incrementCounter = (step = 1) => {
   return {
@@ -17,7 +17,7 @@ export const log = (message) => {
   return {
     type: 'LOG',
     message: {
-      id: logSerial++,
+      id: (new Date()),  // This is bad
       text: message
     }
   }
