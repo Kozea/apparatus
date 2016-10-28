@@ -64,16 +64,21 @@ module.exports = {
     historyApiFallback: true,
     bind: bind,
     port: port,
-    stats: {colors: true}
+    stats: {colors: true},
+    watchOptions: {
+      ignored: /node_modules/
+    },
   },
 
   // Webpack plugin list
   plugins: DEBUG ?
     [
       // Allow hot module replacement
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NamedModulesPlugin()
     ] : [
       new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'}),
+      new webpack.NamedModulesPlugin(),
       new ExtractTextPlugin({filename: 'style.css'}),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({

@@ -10,7 +10,7 @@ const StartCounter = connect((state) => {
     return {
       onResetClick: (count) => {
         dispatch(resetCounter())
-        dispatch(log(`Reset`))
+        dispatch(log('Reset'))
       },
       onStartCounter: () => dispatch(startCounter()),
       onStopCounter: () => dispatch(stopCounter()),

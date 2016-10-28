@@ -1,4 +1,4 @@
-import { withPackageName } from 'react-pacomo';
-const pacomo = withPackageName('reactest');
+import { withPackageName } from 'react-pacomo'
+const pacomo = withPackageName('reactest')
 
-export { pacomo };
+export { pacomo }

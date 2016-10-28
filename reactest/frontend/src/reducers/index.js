@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 const initialState = {
   val: 0,
-  start: 5,
+  start: 0,
   step: 1
 }
 

@@ -11,6 +11,7 @@ import './index.sass'
 const logger = createLogger()
 
 let store = createStore(reactest, applyMiddleware(thunk, logger))
+let root = document.getElementById('root')
 
 let render = () => {
   const App = require('./components/App').default
@@ -18,17 +19,17 @@ let render = () => {
     <Provider store={store}>
       <App />
     </Provider>,
-    document.getElementById('root')
+    root
   )
 }
 
 if (module.hot) {
   const renderApp = render
   const renderError = (error) => {
-    const RedBox = require('redbox-react')
+    const RedBox = require('redbox-react').default
     ReactDOM.render(
       <RedBox error={error} />,
-      document.getElementById('root')
+      root
     )
   }
   render = () => {
@@ -38,9 +39,15 @@ if (module.hot) {
       renderError(error)
     }
     module.hot.accept('./components/App', () => {
-      setTimeout(render)
+      setImmediate(() => {
+        ReactDOM.unmountComponentAtNode(root)
+        render()
+      })
     })
   }
+  module.hot.accept('./reducers', () => {
+    store.replaceReducer(require('./reducers').default)
+  })
 }
 
 render()
