@@ -1,6 +1,6 @@
-from flask import render_template
+from flask import jsonify, render_template
 
-from .. import app
+from .. import __version__, app
 from ..utils import counter_initializer, render_component
 
 
@@ -15,7 +15,8 @@ def index(count=None):
                 'step': 1,
                 'val': count
             },
-            'messages': [{'id': 1, 'text': 'State from Server!!'}]
+            'messages': [{'id': 1, 'text': 'State from Server!!'}],
+            'version': __version__
         }
     else:
         state = None
@@ -23,3 +24,10 @@ def index(count=None):
         'frontend/src/components/App.jsx', state=state)
     return render_template(
         "index.jinja2", rendered=rendered, state=state)
+
+
+@app.route("/version.json")
+def version():
+    return jsonify({
+        'version': __version__
+    })

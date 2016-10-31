@@ -34,9 +34,19 @@ const logs = (state=[], action) => {
   }
 }
 
+const version = (state='?', action) => {
+  switch (action.type) {
+    case 'SET_VERSION':
+      return action.version
+    default:
+      return state
+  }
+}
+
 const reactest = combineReducers({
   count,
-  messages: logs
+  messages: logs,
+  version: version
 })
 
 export default reactest
