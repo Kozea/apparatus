@@ -8,5 +8,6 @@ new WebpackDevServer(webpack(config), config.devServer)
     return console.log(err)
   }
 
-  console.log(`Listening at http://${config.devServer.bind}:${config.devServer.port}/`)
+  console.log(`Webpack dev static server listening at http://${
+    config.devServer.bind}:${config.devServer.port}/`)
 })

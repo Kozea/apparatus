@@ -15,8 +15,7 @@ require('babel-register')({
 		]
 	]
 })
-
-server = url.parse(process.env.RENDER_SERVER)
+server_url = url.parse(process.env.RENDER_SERVER)
 
 var app = express()
 var server = http.Server(app)
@@ -33,20 +32,17 @@ app.post('/render', function(req, res) {
 			res.json({
 				error: {
 					type: err.constructor.name,
-					message: err.message,
 					stack: err.stack
-				},
-				markup: null
+				}
 			})
 		} else {
 			res.json({
-				error: null,
 				markup: markup
 			})
 		}
 	})
 })
 
-server.listen(server.port, server.hostname, function() {
-	console.log('React render server listening at ' + server.href)
+server.listen(server_url.port, server_url.hostname, function() {
+	console.log('React render server listening at ' + server_url.href)
 })

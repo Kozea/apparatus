@@ -1,8 +1,8 @@
 export PROJECT_NAME = reactest
 HOST=localhost
 PYTHON_PORT = 1220
-STATIC_PORT = $$(( $(PYTHON_PORT) + 1 ))
-RENDER_PORT = $$(( $(PYTHON_PORT) + 2 ))
+STATIC_PORT = 1221
+RENDER_PORT = 1222
 
 export STATIC_SERVER = http://$(HOST):$(STATIC_PORT)
 export RENDER_SERVER = http://$(HOST):$(RENDER_PORT)
