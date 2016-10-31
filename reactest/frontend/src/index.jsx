@@ -6,20 +6,30 @@ import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import reactest from './reducers'
 import App from './components/App'
-import './index.sass'
 
 const logger = createLogger()
 
 let store = createStore(reactest, applyMiddleware(thunk, logger))
-let root = document.getElementById('root')
+
+let root_node = null
+if (typeof document !== "undefined") {
+  root_node = document.getElementById('root')
+}
+
+function Root() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
+
 
 let render = () => {
   const App = require('./components/App').default
   ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    root
+    <Root />,
+    root_node
   )
 }
 
@@ -29,7 +39,7 @@ if (module.hot) {
     const RedBox = require('redbox-react').default
     ReactDOM.render(
       <RedBox error={error} />,
-      root
+      root_node
     )
   }
   render = () => {
@@ -40,7 +50,7 @@ if (module.hot) {
     }
     module.hot.accept('./components/App', () => {
       setImmediate(() => {
-        ReactDOM.unmountComponentAtNode(root)
+        ReactDOM.unmountComponentAtNode(root_node)
         render()
       })
     })
@@ -50,4 +60,8 @@ if (module.hot) {
   })
 }
 
-render()
+if (root_node != null) {
+  render()
+}
+
+export default Root

@@ -28,6 +28,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "Flask>=0.10.0",
+        "react"
     ],
     provides=["reactest"],
     setup_requires=['pytest-runner'],

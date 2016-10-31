@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { pacomo } from '../utils'
-import store from '../index.jsx'
+import store from './App'
 import './Counter.sass'
 
 

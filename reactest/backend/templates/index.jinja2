@@ -7,8 +7,7 @@
     {% endif %}
   </head>
   <body data-count="{{ count }}">
-    <div id="root">
-    </div>
+    <div id="root">{{ rendered |safe }}</div>
     <script src="{{ config.get('STATIC_SERVER', '') }}{{ url_for('static', filename='bundle.js') }}"></script>
   </body>
 </html>
