@@ -8,28 +8,18 @@ import reactest from './reducers'
 import App from './components/App'
 
 const logger = createLogger()
-
-let store = createStore(reactest, applyMiddleware(thunk, logger))
-
-let root_node = null
-if (typeof document !== 'undefined') {
-  root_node = document.getElementById('root')
-}
-
-function Root() {
-  return (
-    <Provider store={store}>
-      <App />
-    </Provider>
-  )
-}
+let rootNode = document.getElementById('root')
+let serverState = window.__PRELOADED_STATE__ || undefined
+let store = createStore(reactest, serverState, applyMiddleware(thunk, logger))
 
 
 let render = () => {
   const App = require('./components/App').default
   ReactDOM.render(
-    Root(),
-    root_node
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    rootNode
   )
 }
 
@@ -39,7 +29,7 @@ if (module.hot) {
     const RedBox = require('redbox-react').default
     ReactDOM.render(
       <RedBox error={error} />,
-      root_node
+      rootNode
     )
   }
   render = () => {
@@ -50,7 +40,7 @@ if (module.hot) {
     }
     module.hot.accept('./components/App', () => {
       setImmediate(() => {
-        ReactDOM.unmountComponentAtNode(root_node)
+        ReactDOM.unmountComponentAtNode(rootNode)
         render()
       })
     })
@@ -60,8 +50,4 @@ if (module.hot) {
   })
 }
 
-if (root_node != null) {
-  render()
-}
-
-export default Root
+render()

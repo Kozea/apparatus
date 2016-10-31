@@ -17,7 +17,7 @@ export const log = (message) => {
   return {
     type: 'LOG',
     message: {
-      id: (new Date()),  // This is bad
+      id: (new Date()).getTime(),  // This is bad
       text: message
     }
   }

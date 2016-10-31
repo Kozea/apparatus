@@ -6,8 +6,15 @@
       <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
     {% endif %}
   </head>
-  <body data-count="{{ count }}">
+  <body>
     <div id="root">{{ rendered |safe }}</div>
+    {% if state %}
+      {# Redux initial state #}
+      <script>
+        window.__PRELOADED_STATE__ = {{ state | tojson }}
+      </script>
+    {% endif %}
+
     <script src="{{ config.get('STATIC_SERVER', '') }}{{ url_for('static', filename='bundle.js') }}"></script>
   </body>
 </html>

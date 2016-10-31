@@ -7,6 +7,7 @@ from flask import current_app
 
 
 def counter_initializer(i: int) -> int:
+    i = i or 5
     return abs(i)
 
 
@@ -14,14 +15,24 @@ class ReactError(Exception):
     pass
 
 
-def render_component(filename, **kwargs):
+def render_component(filename, reducer=None, state=None):
     path = os.path.join(current_app.root_path, '..', filename)
     if not os.path.exists(path):
         raise ValueError('%s does not exists' % path)
 
+    if not reducer:
+        reducer = 'frontend/src/reducers/index.js'
+
+    reducer_path = os.path.join(current_app.root_path, '..', reducer)
+    if not os.path.exists(reducer_path):
+        raise ValueError('%s does not exists' % path)
+
     data = {
-        'path': path
+        'path': path,
+        'reducer': reducer_path
     }
+    if state:
+        data['state'] = dumps(state)
 
     request = Request(
         '%s/render' % current_app.config['RENDER_SERVER'],
