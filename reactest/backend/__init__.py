@@ -1,5 +1,4 @@
 import os
-from urllib.parse import urlparse
 
 import pkg_resources
 from flask import Flask

@@ -12,7 +12,7 @@ const logger = createLogger()
 let store = createStore(reactest, applyMiddleware(thunk, logger))
 
 let root_node = null
-if (typeof document !== "undefined") {
+if (typeof document !== 'undefined') {
   root_node = document.getElementById('root')
 }
 

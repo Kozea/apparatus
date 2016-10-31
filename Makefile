@@ -37,6 +37,7 @@ clean:
 
 clean-install: clean
 	rm -fr node_modules
+	rm -fr $(VENV)
 
 lint-python:
 	$(PYTEST) --flake8 -m flake8 reactest
@@ -58,10 +59,6 @@ check: check-python check-node
 build: clean lint
 	NODE_ENV=production $(NPM) run build
 
-serve-python-with-static:
-	# Allow to test static build
-	STATIC_SERVER= $(FLASK) run
-
 serve-python:
 	$(FLASK) run
 
@@ -70,6 +67,9 @@ serve-static:
 
 serve-renderer:
 	$(NPM) run render-server
+
+build-check:
+	set -m; ((STATIC_SERVER= $(FLASK) run -h $(HOST) -p $(PYTHON_PORT); kill 0)& ($(NPM) run render-server; kill 0)& wait)
 
 serve:
 	set -m; (($(FLASK) run -h $(HOST) -p $(PYTHON_PORT); kill 0)& ($(NPM) run static-server; kill 0)& ($(NPM) run render-server; kill 0)& wait)
