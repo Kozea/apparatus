@@ -28,7 +28,7 @@ function Root() {
 let render = () => {
   const App = require('./components/App').default
   ReactDOM.render(
-    <Root />,
+    Root(),
     root_node
   )
 }

@@ -1,16 +1,19 @@
 import os
+from urllib.parse import urlparse
 
 import pkg_resources
 from flask import Flask
+
 
 __version__ = pkg_resources.require("reactest")[0].version
 
 app = Flask(__name__)
 app.config.from_pyfile(os.getenv('FLASK_CONFIG'))
 app.config['STATIC_SERVER'] = os.getenv('STATIC_SERVER')
+app.config['PYTHON_SERVER'] = os.getenv('PYTHON_SERVER')
+urlparse(app.config['PYTHON_SERVER'])
 
 app.static_folder = os.path.join(
     os.path.dirname(__file__), '..', 'frontend', 'static')
-
 
 from .routes import *  # noqa

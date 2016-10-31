@@ -1,5 +1,11 @@
 export PROJECT_NAME = reactest
-export STATIC_SERVER = http://localhost:3000
+HOST=localhost
+PYTHON_PORT = 1220
+STATIC_PORT = $$(( $(PYTHON_PORT) + 1 ))
+RENDER_PORT = $$(( $(PYTHON_PORT) + 2 ))
+
+export STATIC_SERVER = http://$(HOST):$(STATIC_PORT)
+export RENDER_SERVER = http://$(HOST):$(RENDER_PORT)
 export FLASK_APP = reactest.backend
 export FLASK_CONFIG = $(PWD)/$(PROJECT_NAME)/backend/application.cfg
 export FLASK_DEBUG = 1
@@ -60,7 +66,10 @@ serve-python:
 	$(FLASK) run
 
 serve-static:
-	$(NPM) run start
+	$(NPM) run static-server
+
+serve-renderer:
+	$(NPM) run render-server
 
 serve:
-	set -m; (($(FLASK) run; kill 0)& ($(NPM) run start; kill 0)& wait)
+	set -m; (($(FLASK) run -h $(HOST) -p $(PYTHON_PORT); kill 0)& ($(NPM) run static-server; kill 0)& ($(NPM) run render-server; kill 0)& wait)
