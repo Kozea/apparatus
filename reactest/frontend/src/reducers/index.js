@@ -43,10 +43,10 @@ const version = (state='?', action) => {
   }
 }
 
-const reactest = combineReducers({
+const reducer = combineReducers({
   count,
   messages: logs,
   version: version
 })
 
-export default reactest
+export default reducer

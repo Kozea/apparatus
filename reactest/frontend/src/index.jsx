@@ -2,15 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
-import reactest from './reducers'
+import reducer from './reducers'
 import App from './components/App'
 
 const logger = createLogger()
 let rootNode = document.getElementById('root')
 let serverState = window.__PRELOADED_STATE__ || undefined
-let store = createStore(reactest, serverState, applyMiddleware(thunk, logger))
+let store = createStore(reducer, serverState, composeWithDevTools(
+  applyMiddleware(thunk)))
 
 
 let render = () => {
