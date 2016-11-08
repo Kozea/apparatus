@@ -1,25 +1,4 @@
-export PROJECT_NAME = reactest
-HOST=localhost
-PYTHON_PORT = 1220
-STATIC_PORT = 1221
-RENDER_PORT = 1222
-
-export STATIC_SERVER = http://$(HOST):$(STATIC_PORT)
-export RENDER_SERVER = http://$(HOST):$(RENDER_PORT)
-export FLASK_APP = reactest.backend
-export FLASK_CONFIG = $(PWD)/$(PROJECT_NAME)/backend/application.cfg
-export FLASK_DEBUG = 1
-
-# Python env
-VENV = $(PWD)/.env
-PIP = $(VENV)/bin/pip
-PYTHON = $(VENV)/bin/python
-PYTEST = $(VENV)/bin/py.test
-FLASK = $(VENV)/bin/flask
-
-# Node env
-NPM ?= yarn
-
+include Makefile.config
 
 all: install serve
 
@@ -28,7 +7,7 @@ install-node:
 
 install-python:
 	test -d $(VENV) || virtualenv $(VENV)
-	$(PIP) install --upgrade --no-cache -e .[test]
+	$(PIP) install --upgrade --no-cache pip setuptools -e .[test]
 
 install: install-node install-python
 
@@ -40,8 +19,8 @@ clean-install: clean
 	rm -fr $(VENV)
 
 lint-python:
-	$(PYTEST) --flake8 -m flake8 reactest
-	$(PYTEST) --isort -m isort reactest
+	$(PYTEST) --flake8 -m flake8 $(PROJECT_NAME)
+	$(PYTEST) --isort -m isort $(PROJECT_NAME)
 
 lint-node:
 	$(NPM) run lint
@@ -49,7 +28,7 @@ lint-node:
 lint: lint-python lint-node
 
 check-python:
-	$(PYTEST) reactest
+	$(PYTEST) $(PROJECT_NAME)
 
 check-node:
 	$(NPM) run test
