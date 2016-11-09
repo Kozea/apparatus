@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { pacomo } from '../utils'
+import { block } from '../utils'
 import './LogList.sass'
 
 
-@pacomo.decorator
 export default class Version extends Component {
   constructor(props) {
     super(props)
+    this.b = block('Version')
   }
 
   componentDidMount() {
@@ -15,7 +15,7 @@ export default class Version extends Component {
 
   render() {
     return (
-      <div>
+      <div className={ this.b }>
         { this.props.version }
       </div>
     )

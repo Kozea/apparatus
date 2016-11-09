@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
-import { pacomo } from '../utils'
+import { block } from '../utils'
 import './LogList.sass'
 
 
-export default pacomo.transformer(
-  function LogList({ messages, onLogClick }) {
-    return (
-      <div>
-        <ul className='list'>
-          {messages.map(message => (
-            <li key={message.id} onClick={() => onLogClick(message.id) } className='line'>{message.text}</li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-)
+export default function LogList({ messages, onLogClick }) {
+  const b = block('LogList')
+  return (
+    <div className={ b }>
+      <ul className={ b('list') }>
+        {messages.map(message => (
+          <li key={message.id} onClick={() => onLogClick(message.id) } className={ b('line') }>{message.text}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}

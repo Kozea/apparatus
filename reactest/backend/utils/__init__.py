@@ -44,11 +44,11 @@ def render_component(filename, reducer=None, state=None):
         response = urlopen(request)
     except HTTPError as e:
         if not current_app.debug:
-            raise HTTPError('[ERROR %d on renderering server]' % e.code)
+            raise HTTPError('[ERROR %d] %s' % (
+                response.status, response.read()))
         current_app.logger.warn(
             'Error on rendering server, see on client rendering.')
         return 'NO SERVER RENDERING'
-
     response = response.read()
 
     rv = loads(response.decode('utf-8'))

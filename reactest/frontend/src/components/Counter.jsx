@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { pacomo } from '../utils'
-import store from './App'
+import { block } from '../utils'
 import './Counter.sass'
 
-
-@pacomo.decorator
 export default class Counter extends Component {
   constructor(props) {
     super(props)
+    this.b = block('Counter')
   }
 
   componentDidMount() {
@@ -20,9 +18,9 @@ export default class Counter extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Counter: <span className='count'>{this.props.count}</span></h2>
-        <button className='button' onClick={() => this.props.onResetClick()}>Reset</button>
+      <div className={ this.b }>
+        <h2>Counter: <span className={ this.b('count') }>{ this.props.count }</span></h2>
+        <button className={ this.b('button') } onClick={ () => this.props.onResetClick() }>Reset</button>
       </div>
    )
   }
