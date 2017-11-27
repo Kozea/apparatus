@@ -2,15 +2,19 @@ import fs from 'fs'
 import path from 'path'
 import { PassThrough } from 'stream'
 
+import { createMemoryHistory } from 'history'
 import fetch from 'isomorphic-fetch'
 import Koaze from 'koaze'
 import React from 'react'
 import { renderToNodeStream } from 'react-dom/server'
+import { routerMiddleware } from 'react-router-redux'
+import { applyMiddleware, compose, createStore } from 'redux'
+import thunk from 'redux-thunk'
 
 import App from './components/App'
 import * as config from './config'
+import reducers from './reducers'
 import Root from './Root'
-import { staticStoreAndHistory } from './utils'
 
 const koaze = new Koaze({
   ...config,
@@ -41,7 +45,11 @@ if (config.debug) {
 koaze.router.get('/*', ctx => {
   const htmlStream = new PassThrough()
   htmlStream.write(indexHead)
-  const { store, history } = staticStoreAndHistory(ctx.url)
+  const history = createMemoryHistory({ initialEntries: [ctx.url] })
+  const store = createStore(
+    reducers,
+    compose(applyMiddleware(routerMiddleware(history), thunk))
+  )
   const stream = renderToNodeStream(
     <Root store={store} history={history}>
       <App />
@@ -56,6 +64,7 @@ koaze.router.get('/*', ctx => {
       </script></body>`
     )
     htmlStream.write(finalFooter)
+    ctx.status = store.getState().status
     htmlStream.end()
   })
   ctx.type = 'text/html'
