@@ -45,16 +45,19 @@ if (config.debug) {
 koaze.router.get('/*', ctx => {
   const htmlStream = new PassThrough()
   htmlStream.write(indexHead)
+
   const history = createMemoryHistory({ initialEntries: [ctx.url] })
   const store = createStore(
     reducers,
     compose(applyMiddleware(routerMiddleware(history), thunk))
   )
-  const stream = renderToNodeStream(
+  const components = (
     <Root store={store} history={history}>
       <App />
     </Root>
   )
+
+  const stream = renderToNodeStream(components)
   stream.pipe(htmlStream, { end: false })
   stream.on('end', () => {
     const finalFooter = indexFooter.replace(
@@ -63,8 +66,8 @@ koaze.router.get('/*', ctx => {
         window.__STATE__=${JSON.stringify(store.getState())}
       </script></body>`
     )
-    htmlStream.write(finalFooter)
     ctx.status = store.getState().status
+    htmlStream.write(finalFooter)
     htmlStream.end()
   })
   ctx.type = 'text/html'

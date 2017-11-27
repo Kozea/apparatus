@@ -3,21 +3,16 @@ import { connect } from 'react-redux'
 
 import { setStatus } from '../actions'
 
-class Status extends React.Component {
-  componentWillMount() {
-    const { code, updateStatus } = this.props
-    updateStatus(code)
-  }
-  componentDidUpdate() {
-    this.componentWillMount()
-  }
+class Status extends React.PureComponent {
   render() {
-    const { children } = this.props
+    const { code, updateStatus, children } = this.props
+    // We normally don't dispatc
+    updateStatus(code)
     return children
   }
 }
 
 export default connect(
-  state => ({ request: state.request }),
+  () => ({}),
   dispatch => ({ updateStatus: status => dispatch(setStatus(status)) })
 )(Status)
