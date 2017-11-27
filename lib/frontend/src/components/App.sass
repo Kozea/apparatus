@@ -1,0 +1,26 @@
+html, body, #root
+  margin: 0
+  padding: 0
+  width: 100vw
+  height: 100vh
+
+.App
+  width: 100vw
+  height: 100vh
+  background: linear-gradient(to right, #1fa2ff, #12d8fa, #a6ffcb)
+  margin: 0
+  padding: 2em
+  box-sizing: border-box
+
+  &__main-title
+    color: white
+
+  &__menu
+    display: flex
+    justify-content: space-between
+
+  &__link
+    color: pink
+    &.active
+      text-decoration: none
+      color: orangered

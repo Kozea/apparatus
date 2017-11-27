@@ -1,0 +1,46 @@
+import './App.sass'
+
+import React from 'react'
+import { NavLink, Route, Switch } from 'react-router-dom'
+
+import { block } from '../utils'
+import Dates from './Dates'
+import Home from './Home'
+import NotFound from './NotFound'
+import PageIndicator from './PageIndicator'
+
+const b = block('App')
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      var: 1,
+    }
+  }
+
+  render() {
+    return (
+      <main className={b()}>
+        <h1 className={b('main-title')}>Apparatus!</h1>
+        <nav className={b('menu')}>
+          <NavLink className={b('link')} exact to="/">
+            Home
+          </NavLink>
+          <NavLink className={b('link')} to="/date">
+            Date
+          </NavLink>
+          <NavLink className={b('link')} to="/broken_link">
+            This link is dead
+          </NavLink>
+        </nav>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/date" component={Dates} />
+          <Route component={NotFound} />
+        </Switch>
+        <PageIndicator />
+      </main>
+    )
+  }
+}
