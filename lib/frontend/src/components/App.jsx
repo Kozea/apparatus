@@ -1,6 +1,7 @@
 import './App.sass'
 
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { NavLink, Route, Switch } from 'react-router-dom'
 
 import { block } from '../utils'
@@ -22,6 +23,9 @@ export default class App extends React.Component {
   render() {
     return (
       <main className={b()}>
+        <Helmet>
+          <title>Apparatus site</title>
+        </Helmet>
         <h1 className={b('main-title')}>Apparatus!</h1>
         <nav className={b('menu')}>
           <NavLink className={b('link')} exact to="/">

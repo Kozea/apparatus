@@ -1,6 +1,7 @@
 import './Dates.sass'
 
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 
 import { setClientDate } from '../actions'
@@ -29,6 +30,10 @@ class Dates extends React.Component {
     const { client, server } = this.props
     return (
       <section className={b()}>
+        <Helmet>
+          <title>This is the date page</title>
+        </Helmet>
+
         <p>It’s {client} o’clock on client</p>
         {server === null ? (
           <p>Loading</p>

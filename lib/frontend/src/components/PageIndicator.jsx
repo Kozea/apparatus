@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { block } from '../utils'
 
 const b = block('PageIndicator')
-
 function PageIndicator({ router, status }) {
   return (
     <footer className={b()}>
