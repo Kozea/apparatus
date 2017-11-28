@@ -32,14 +32,16 @@ export default function Html({ helmet, js, css, window, app, children }) {
         <script
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
-            __html: Object.keys(window).reduce(
-              (out, key) =>
-                (out += `window.${key}=${JSON.stringify(window[key])};`),
-              ''
-            ),
+            __html:
+              window &&
+              Object.keys(window).reduce(
+                (out, key) =>
+                  (out += `window.${key}=${JSON.stringify(window[key])};`),
+                ''
+              ),
           }}
         />
-        {js.map(src => <script key={src} defer src={src} />)}
+        {js.map(src => <script key={src} src={src} />)}
       </body>
     </html>
   )

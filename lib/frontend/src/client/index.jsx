@@ -7,8 +7,8 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
 import App from '../components/App'
+import Root from '../components/Root'
 import reducer from '../reducers'
-import Root from '../Root'
 
 export const rootNode = document.getElementById('root')
 

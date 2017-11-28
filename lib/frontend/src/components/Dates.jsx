@@ -11,7 +11,7 @@ import { block } from '../utils'
 const b = block('Dates')
 
 class Dates extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     const { syncServerDate } = this.props
     syncServerDate()
   }
