@@ -4,10 +4,18 @@ import { connect } from 'react-redux'
 import { setStatus } from '../actions'
 
 class Status extends React.PureComponent {
-  render() {
-    const { code, updateStatus, children } = this.props
-    // We normally don't dispatc
+  componentWillMount() {
+    this.update()
+  }
+  componentWillUpdate() {
+    this.update()
+  }
+  update() {
+    const { code, updateStatus } = this.props
     updateStatus(code)
+  }
+  render() {
+    const { children } = this.props
     return children
   }
 }

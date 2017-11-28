@@ -1,17 +1,18 @@
-import fs from 'fs'
+import { readFileSync } from 'fs'
 import path from 'path'
 import { PassThrough } from 'stream'
 
 import { createMemoryHistory } from 'history'
-import fetch from 'isomorphic-fetch'
 import Koaze from 'koaze'
 import React from 'react'
 import { renderToNodeStream } from 'react-dom/server'
+import { Helmet } from 'react-helmet'
 import { routerMiddleware } from 'react-router-redux'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
 import App from './components/App'
+import Html from './components/Html'
 import * as config from './config'
 import reducers from './reducers'
 import Root from './Root'
@@ -23,28 +24,25 @@ const koaze = new Koaze({
   assetsDir: config.dirs.assets,
 })
 
-let indexHead = null
-let indexFooter = null
-
+let css, js
 if (config.debug) {
-  ;(async () => {
-    const response = await fetch(
-      `${config.assetsUrl.href.replace(/\/$/, '')}${
-        config.publicPath
-      }index.html`
-    )
-    const index = await response.text()
-    ;[indexHead, indexFooter] = index.split('<!--REPLACEME-->')
-  })()
+  css = []
+  js = ['manifest.js', 'vendor.js', 'client.js'].map(
+    file => `${config.publicPath}${file}`
+  )
 } else {
-  ;[indexHead, indexFooter] = fs
-    .readFileSync(path.resolve(config.dirs.assets, 'index.html'), 'utf-8')
-    .split('<!--REPLACEME-->')
+  const manifest = JSON.parse(
+    readFileSync(path.resolve(config.dirs.assets, 'manifest.json'), 'utf8')
+  )
+  css = ['client.css'].map(file => `${config.publicPath}${manifest[file]}`)
+  js = ['manifest.js', 'vendor.js', 'client.js'].map(
+    file => `${config.publicPath}${manifest[file]}`
+  )
 }
 
 koaze.router.get('/*', ctx => {
   const htmlStream = new PassThrough()
-  htmlStream.write(indexHead)
+  htmlStream.write('<!DOCTYPE html>')
 
   const history = createMemoryHistory({ initialEntries: [ctx.url] })
   const store = createStore(
@@ -57,17 +55,22 @@ koaze.router.get('/*', ctx => {
     </Root>
   )
 
-  const stream = renderToNodeStream(components)
+  const stream = renderToNodeStream(
+    <Html
+      helmet={Helmet.renderStatic()}
+      window={{
+        __STATE__: store.getState(),
+      }}
+      css={css}
+      js={js}
+    >
+      {components}
+    </Html>
+  )
+
   stream.pipe(htmlStream, { end: false })
   stream.on('end', () => {
-    const finalFooter = indexFooter.replace(
-      '</body>',
-      `<script>
-        window.__STATE__=${JSON.stringify(store.getState())}
-      </script></body>`
-    )
     ctx.status = store.getState().status
-    htmlStream.write(finalFooter)
     htmlStream.end()
   })
   ctx.type = 'text/html'
