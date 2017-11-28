@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Html({ helmet, js, css, window, children }) {
+export default function Html({ helmet, js, css, window, app, children }) {
   return (
     <html
       lang="en"
@@ -22,7 +22,13 @@ export default function Html({ helmet, js, css, window, children }) {
         {helmet.noscript.toComponent()}
       </head>
       <body {...helmet.bodyAttributes.toComponent()}>
-        <div id="root">{children}</div>
+        <div
+          id="root"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={app && { __html: app }}
+        >
+          {children}
+        </div>
         <script
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{

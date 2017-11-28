@@ -1,11 +1,10 @@
 import { readFileSync } from 'fs'
 import path from 'path'
-import { PassThrough } from 'stream'
 
 import { createMemoryHistory } from 'history'
 import Koaze from 'koaze'
 import React from 'react'
-import { renderToNodeStream } from 'react-dom/server'
+import { renderToString } from 'react-dom/server'
 import { Helmet } from 'react-helmet'
 import { routerMiddleware } from 'react-router-redux'
 import { applyMiddleware, compose, createStore } from 'redux'
@@ -41,21 +40,21 @@ if (config.debug) {
 }
 
 koaze.router.get('/*', ctx => {
-  const htmlStream = new PassThrough()
-  htmlStream.write('<!DOCTYPE html>')
-
   const history = createMemoryHistory({ initialEntries: [ctx.url] })
   const store = createStore(
     reducers,
     compose(applyMiddleware(routerMiddleware(history), thunk))
   )
-  const components = (
+
+  // Render app and get side effects
+  const app = renderToString(
     <Root store={store} history={history}>
       <App />
     </Root>
   )
 
-  const stream = renderToNodeStream(
+  // Render outer app with side effects
+  const html = renderToString(
     <Html
       helmet={Helmet.renderStatic()}
       window={{
@@ -63,18 +62,14 @@ koaze.router.get('/*', ctx => {
       }}
       css={css}
       js={js}
-    >
-      {components}
-    </Html>
+      app={app}
+    />
   )
 
-  stream.pipe(htmlStream, { end: false })
-  stream.on('end', () => {
-    ctx.status = store.getState().status
-    htmlStream.end()
-  })
+  // Get status from side effect
+  ctx.status = store.getState().status
   ctx.type = 'text/html'
-  ctx.body = htmlStream
+  ctx.body = `<!DOCTYPE html>${html}`
 })
 
 koaze.serve(console.error.bind(console))
