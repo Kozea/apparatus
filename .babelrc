@@ -1,14 +1,15 @@
 {
   "presets": [
     "react",
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "node": true
-        }
+      },
+      "useBuiltIns": "entry"
       }
     ]
   ],
   "plugins": [
-    "transform-object-rest-spread"
+    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }]
   ]
 }
