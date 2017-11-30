@@ -34,9 +34,15 @@ koaze.router.get('/*', ctx => {
       <App />
     </Root>
   )
-
   // Get status from side effect
-  ctx.status = store.getState().status
+  const { status } = store.getState()
+  ctx.status = status.code
+
+  if ([301, 302].includes(status.code)) {
+    ctx.redirect(status.url)
+    return
+  }
+
   ctx.type = 'text/html'
   ctx.body = renderHtml(app, store)
 })

@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 import { block } from '../utils'
 
 const b = block('PageIndicator')
-function PageIndicator({ router, status }) {
+function PageIndicator({ router, status: { code, url } }) {
   return (
     <footer className={b()}>
       <h3 className={b('page')}>
-        <small>{status} </small>
+        <small>{code} </small> {url && `${url} -> `}
         {router.location.pathname}
       </h3>
     </footer>
