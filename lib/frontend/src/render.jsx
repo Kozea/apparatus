@@ -24,9 +24,12 @@ const getAssets = () => {
       assets.css = ['client.css'].map(
         file => `${config.publicPath}${manifest[file]}`
       )
-      assets.js = ['manifest.js', 'vendor.js', 'client.js'].map(
-        file => `${config.publicPath}${manifest[file]}`
-      )
+      assets.js = [
+        '/polyfill.js',
+        ...['manifest.js', 'vendor.js', 'client.js'].map(
+          file => `${config.publicPath}${manifest[file]}`
+        ),
+      ]
     }
   }
   return assets
