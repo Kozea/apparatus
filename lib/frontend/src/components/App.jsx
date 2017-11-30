@@ -3,13 +3,12 @@ import './App.sass'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { NavLink, Route, Switch } from 'react-router-dom'
+import { NotFound, Redirect } from 'redux-http-status'
 
 import { block } from '../utils'
 import Dates from './Dates'
 import Home from './Home'
-import NotFound from './NotFound'
 import PageIndicator from './PageIndicator'
-import Redirect from './Redirect'
 
 const b = block('App')
 
