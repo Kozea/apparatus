@@ -12,18 +12,18 @@ const b = block('Dates')
 
 class Dates extends React.Component {
   componentDidMount() {
-    const { syncServerDate } = this.props
-    syncServerDate()
+    const { getServerDate } = this.props
+    getServerDate()
   }
 
   refreshServer() {
-    const { syncServerDate } = this.props
-    syncServerDate()
+    const { getServerDate } = this.props
+    getServerDate()
   }
 
   refreshClient() {
-    const { syncClientDate } = this.props
-    syncClientDate()
+    const { getClientDate } = this.props
+    getClientDate()
   }
 
   render() {
@@ -65,7 +65,7 @@ export default connect(
     server: state.date.server,
   }),
   dispatch => ({
-    syncServerDate: () => dispatch(fetchServerDate()),
-    syncClientDate: () => dispatch(setClientDate(Date.now())),
+    getServerDate: () => dispatch(fetchServerDate()),
+    getClientDate: () => dispatch(setClientDate(Date.now())),
   })
 )(Dates)

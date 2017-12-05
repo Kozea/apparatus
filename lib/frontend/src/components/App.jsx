@@ -7,6 +7,7 @@ import { NotFound, Redirect } from 'redux-http-status'
 
 import { block } from '../utils'
 import Dates from './Dates'
+import Db from './Db'
 import Home from './Home'
 import PageIndicator from './PageIndicator'
 
@@ -34,6 +35,9 @@ export default class App extends React.Component {
           <NavLink className={b('link')} to="/date">
             Date
           </NavLink>
+          <NavLink className={b('link')} to="/db">
+            Db
+          </NavLink>
           <NavLink className={b('link')} to="/broken_link">
             This link is dead
           </NavLink>
@@ -44,6 +48,7 @@ export default class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/date" component={Dates} />
+          <Route path="/db" component={Db} />
           <Route
             path="/old/date"
             component={() => <Redirect code={301} url="/date" />}

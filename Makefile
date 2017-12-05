@@ -108,3 +108,10 @@ run:
 
 serve: env-check clean
 	$(MAKE) P="serve-node-client serve-node-server serve-python" make-p
+
+# custom
+install-db:
+	psql -U postgres -c "CREATE USER apparatus" ||:
+	psql -U postgres -c "CREATE database apparatus owner apparatus" ||:
+	$(FLASK) create_db
+	$(FLASK) insert_data
