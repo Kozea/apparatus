@@ -52,7 +52,7 @@ class Db extends React.Component {
         <div className={b('lists')}>
           <div className={b('colors')}>
             <h2>Colors</h2>
-            {color.loading && 'LOADING...'}
+            {color.loading && <div className={b('loading')}>LOADING...</div>}
             {color.data.sort((x, y) => x.id - y.id).map(c => (
               <div key={c.id} className={b('color')}>
                 <span style={{ color: c.hex }}>{c.name}</span> ({c.hex} /{' '}
@@ -68,7 +68,7 @@ class Db extends React.Component {
           </div>
           <div className={b('shapes')}>
             <h2>Shapes</h2>
-            {shape.loading && 'LOADING...'}
+            {shape.loading && <div className={b('loading')}>LOADING...</div>}
             {shape.data.sort((x, y) => x.id - y.id).map(s => (
               <div key={s.id} className={b('color')}>
                 <span>{s.name}</span> {s.sides} sides.
@@ -143,6 +143,9 @@ class Db extends React.Component {
               />
             </form>
           </div>
+          <button onClick={() => this.props.edit('color', { id: -1 })}>
+            Broken
+          </button>
         </div>
       </section>
     )
