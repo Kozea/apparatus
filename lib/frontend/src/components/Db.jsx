@@ -17,9 +17,11 @@ class Db extends React.Component {
       shape: {},
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     const { sync } = this.props
-    sync()
+    await sync()
+    // eslint-disable-next-line no-console
+    console.log('I am synced')
   }
 
   handleChange(type, key, val) {
@@ -31,14 +33,19 @@ class Db extends React.Component {
     remove(type, id)
   }
 
-  handleSubmit(type, e) {
+  async handleSubmit(type, e) {
     e.preventDefault()
     const { add, edit } = this.props
     const obj = this.state[type]
-    if (obj.id === void 0) {
-      add(type, obj, () => this.setState({ [type]: {} }))
-    } else {
-      edit(type, obj, () => this.setState({ [type]: {} }))
+    obj.name = obj.name || null
+    try {
+      if (obj.id === void 0) {
+        await add(type, obj, () => this.setState({ [type]: {} }))
+      } else {
+        await edit(type, obj, () => this.setState({ [type]: {} }))
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -53,7 +60,7 @@ class Db extends React.Component {
           <div className={b('colors')}>
             <h2>Colors</h2>
             {color.loading && <div className={b('loading')}>LOADING...</div>}
-            {color.data.sort((x, y) => x.id - y.id).map(c => (
+            {color.objects.sort((x, y) => x.id - y.id).map(c => (
               <div key={c.id} className={b('color')}>
                 <span style={{ color: c.hex }}>{c.name}</span> ({c.hex} /{' '}
                 {c.rgb})
@@ -69,7 +76,7 @@ class Db extends React.Component {
           <div className={b('shapes')}>
             <h2>Shapes</h2>
             {shape.loading && <div className={b('loading')}>LOADING...</div>}
-            {shape.data.sort((x, y) => x.id - y.id).map(s => (
+            {shape.objects.sort((x, y) => x.id - y.id).map(s => (
               <div key={s.id} className={b('color')}>
                 <span>{s.name}</span> {s.sides} sides.
                 <button onClick={() => this.setState({ shape: s })}>
@@ -143,9 +150,6 @@ class Db extends React.Component {
               />
             </form>
           </div>
-          <button onClick={() => this.props.edit('color', { id: -1 })}>
-            Broken
-          </button>
         </div>
       </section>
     )
@@ -158,18 +162,13 @@ export default connect(
     shape: state.api.shape,
   }),
   dispatch => ({
-    sync: () => {
-      dispatch(api.actions.color.get())
-      dispatch(api.actions.shape.get())
-    },
-    add: (type, obj, cb) => {
-      dispatch(api.actions[type].post(obj, cb))
-    },
-    edit: (type, obj, cb) => {
-      dispatch(api.actions[type].put(obj, { id: obj.id }, cb))
-    },
-    remove: (type, id) => {
-      dispatch(api.actions[type].delete({ id }))
-    },
+    sync: () =>
+      Promise.all([
+        dispatch(api.actions.color.get()),
+        dispatch(api.actions.shape.get()),
+      ]),
+    add: (type, obj) => dispatch(api.actions[type].postAll(obj)),
+    edit: (type, obj) => dispatch(api.actions[type].put({ id: obj.id }, obj)),
+    remove: (type, id) => dispatch(api.actions[type].delete({ id })),
   })
 )(Db)
