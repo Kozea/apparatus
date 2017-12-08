@@ -6579,10 +6579,11 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-api-unrest@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/redux-api-unrest/-/redux-api-unrest-0.1.2.tgz#dbe97975a3cacfccdfe092df28fba5446821b065"
+redux-api-unrest@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/redux-api-unrest/-/redux-api-unrest-0.2.0.tgz#f92d81d0d428884caee9682a453c1582c208e049"
   dependencies:
+    deep-equal "^1.0.1"
     isomorphic-fetch "^2.2.1"
     path-to-regexp "^2.1.0"
     regenerator-runtime "^0.11.0"
@@ -7959,9 +7960,9 @@ webpack-dev-middleware@^1.11.0:
     range-parser "^1.0.3"
     time-stamp "^2.0.0"
 
-webpack-dev-server@2.9.5:
-  version "2.9.5"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.9.5.tgz#79336fba0087a66ae491f4869f6545775b18daa8"
+webpack-dev-server@2.9.7:
+  version "2.9.7"
+  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.9.7.tgz#100ad6a14775478924d417ca6dcfb9d52a98faed"
   dependencies:
     ansi-html "0.0.7"
     array-includes "^3.0.3"
