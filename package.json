@@ -57,7 +57,7 @@
     "react-router-redux": "5.0.0-alpha.8",
     "redbox-react": "1.5.0",
     "redux": "3.7.2",
-    "redux-api-unrest": "^0.2.0",
+    "redux-api-unrest": "^0.2.1",
     "redux-http-status": "^0.0.8",
     "redux-thunk": "2.2.0"
   },

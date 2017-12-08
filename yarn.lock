@@ -6579,9 +6579,9 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-api-unrest@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/redux-api-unrest/-/redux-api-unrest-0.2.0.tgz#f92d81d0d428884caee9682a453c1582c208e049"
+redux-api-unrest@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/redux-api-unrest/-/redux-api-unrest-0.2.1.tgz#2c9c2417b810ca020f2909f2890b8b70d44e2400"
   dependencies:
     deep-equal "^1.0.1"
     isomorphic-fetch "^2.2.1"
