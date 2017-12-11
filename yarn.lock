@@ -2590,9 +2590,9 @@ eslint-scope@^3.7.1:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@4.12.1:
-  version "4.12.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.12.1.tgz#5ec1973822b4a066b353770c3c6d69a2a188e880"
+eslint@4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.13.0.tgz#1991aa359586af83877bde59de9d41f53e20826d"
   dependencies:
     ajv "^5.3.0"
     babel-code-frame "^6.22.0"
@@ -6579,9 +6579,9 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-api-unrest@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/redux-api-unrest/-/redux-api-unrest-0.2.1.tgz#2c9c2417b810ca020f2909f2890b8b70d44e2400"
+redux-api-unrest@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/redux-api-unrest/-/redux-api-unrest-0.2.2.tgz#c984640f5b386aea7f56e5f95a03b8ca11b01b67"
   dependencies:
     deep-equal "^1.0.1"
     isomorphic-fetch "^2.2.1"
@@ -6817,9 +6817,9 @@ resolve-pathname@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/resolve-pathname/-/resolve-pathname-2.2.0.tgz#7e9ae21ed815fd63ab189adeee64dc831eefa879"
 
-resolve-url-loader@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/resolve-url-loader/-/resolve-url-loader-2.2.0.tgz#9662feaa11debf7cf8e3feb91dae9544aa7dee88"
+resolve-url-loader@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/resolve-url-loader/-/resolve-url-loader-2.2.1.tgz#13a1396fb773edf959550e400e688f5ed32548bf"
   dependencies:
     adjust-sourcemap-loader "^1.1.0"
     camelcase "^4.0.0"

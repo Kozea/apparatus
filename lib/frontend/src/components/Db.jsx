@@ -47,6 +47,7 @@ class Db extends React.Component {
     } catch (error) {
       console.error(error)
     }
+    this.setState({ [type]: {} })
   }
 
   render() {
