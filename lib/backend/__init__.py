@@ -1,3 +1,6 @@
+import logging
+import os
+
 from flask import Flask
 
 from .model import Color, Shape, db
@@ -25,6 +28,20 @@ def insert_data():
     db.session.commit()
     db.session.remove()
 
+
+if app.debug:
+    level = logging.INFO if os.getenv('PYTHON_VERBOSE', os.getenv('VERBOSE')
+                                      ) else logging.WARNING
+    app.logger.setLevel(level)
+    logging.getLogger('sqlalchemy').setLevel(level)
+    logging.getLogger('sqlalchemy'
+                      ).handlers = logging.getLogger('werkzeug').handlers
+    logging.getLogger('sqlalchemy.orm').setLevel(logging.WARNING)
+    logging.getLogger('unrest').setLevel(level)
+    logging.getLogger('unrest'
+                      ).handlers = logging.getLogger('werkzeug').handlers
+    if level == logging.WARNING:
+        logging.getLogger('werkzeug').setLevel(level)
 
 from .api import *  # noqa isort:skip
 from .routes import *  # noqa isort:skip

@@ -168,8 +168,9 @@ export default connect(
         dispatch(api.actions.color.get()),
         dispatch(api.actions.shape.get()),
       ]),
-    add: (type, obj) => dispatch(api.actions[type].postAll(obj)),
-    edit: (type, obj) => dispatch(api.actions[type].put({ id: obj.id }, obj)),
-    remove: (type, id) => dispatch(api.actions[type].delete({ id })),
+    add: (type, obj) => dispatch(api.actions[type].post(obj)),
+    edit: (type, obj) =>
+      dispatch(api.actions[type].putItem({ id: obj.id }, obj)),
+    remove: (type, id) => dispatch(api.actions[type].deleteItem({ id })),
   })
 )(Db)
