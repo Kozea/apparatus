@@ -1,14 +1,13 @@
 import './Db.sass'
 
+import block from 'bemboo'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 
 import api from '../api'
-import { block } from '../utils'
 
 const b = block('Db')
-
 class Db extends React.Component {
   constructor(props) {
     super(props)
@@ -53,16 +52,16 @@ class Db extends React.Component {
   render() {
     const { color, shape } = this.props
     return (
-      <section className={b()}>
+      <section className={b}>
         <Helmet>
           <title>This is the color / shape page</title>
         </Helmet>
-        <div className={b('lists')}>
-          <div className={b('colors')}>
+        <div className={b.e('lists')}>
+          <div className={b.e('colors')}>
             <h2>Colors</h2>
-            {color.loading && <div className={b('loading')}>LOADING...</div>}
+            {color.loading && <div className={b.e('loading')}>LOADING...</div>}
             {color.objects.sort((x, y) => x.id - y.id).map(c => (
-              <div key={c.id} className={b('color')}>
+              <div key={c.id} className={b.e('color')}>
                 <span style={{ color: c.hex }}>{c.name}</span> ({c.hex} /{' '}
                 {c.rgb})
                 <button onClick={() => this.setState({ color: c })}>
@@ -74,11 +73,11 @@ class Db extends React.Component {
               </div>
             ))}
           </div>
-          <div className={b('shapes')}>
+          <div className={b.e('shapes')}>
             <h2>Shapes</h2>
-            {shape.loading && <div className={b('loading')}>LOADING...</div>}
+            {shape.loading && <div className={b.e('loading')}>LOADING...</div>}
             {shape.objects.sort((x, y) => x.id - y.id).map(s => (
-              <div key={s.id} className={b('color')}>
+              <div key={s.id} className={b.e('color')}>
                 <span>{s.name}</span> {s.sides} sides.
                 <button onClick={() => this.setState({ shape: s })}>
                   Edit
@@ -91,8 +90,8 @@ class Db extends React.Component {
           </div>
         </div>
 
-        <div className={b('forms')}>
-          <div className={b('color')}>
+        <div className={b.e('forms')}>
+          <div className={b.e('color')}>
             <h2>Color</h2>
             <form onSubmit={e => this.handleSubmit('color', e)}>
               <input
@@ -125,7 +124,7 @@ class Db extends React.Component {
               />
             </form>
           </div>
-          <div className={b('shape')}>
+          <div className={b.e('shape')}>
             <h2>Shape</h2>
             <form onSubmit={e => this.handleSubmit('shape', e)}>
               <input

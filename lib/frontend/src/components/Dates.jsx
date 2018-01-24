@@ -1,15 +1,14 @@
 import './Dates.sass'
 
+import block from 'bemboo'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 
 import { setClientDate } from '../actions'
 import { fetchServerDate } from '../actions/thunks'
-import { block } from '../utils'
 
 const b = block('Dates')
-
 class Dates extends React.Component {
   componentDidMount() {
     const { getServerDate } = this.props
@@ -29,7 +28,7 @@ class Dates extends React.Component {
   render() {
     const { client, server } = this.props
     return (
-      <section className={b()}>
+      <section className={b}>
         <Helmet>
           <title>This is the date page</title>
         </Helmet>
