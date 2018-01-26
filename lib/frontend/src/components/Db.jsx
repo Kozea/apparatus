@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import api from '../api'
 
-const b = block('Db')
+@block
 class Db extends React.Component {
   constructor(props) {
     super(props)
@@ -49,7 +49,7 @@ class Db extends React.Component {
     this.setState({ [type]: {} })
   }
 
-  render() {
+  render(b) {
     const { color, shape } = this.props
     return (
       <section className={b}>

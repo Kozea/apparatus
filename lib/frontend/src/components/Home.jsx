@@ -6,8 +6,7 @@ import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-const b = block('Home')
-function Home({ gotoDate }) {
+function Home(b, { gotoDate }) {
   return (
     <section className={b}>
       <Helmet>
@@ -22,4 +21,4 @@ function Home({ gotoDate }) {
 export default connect(
   () => ({}),
   dispatch => ({ gotoDate: () => dispatch(push('/date')) })
-)(Home)
+)(block(Home))

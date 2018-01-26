@@ -10,9 +10,9 @@ import Dates from './Dates'
 import Db from './Db'
 import Home from './Home'
 import PageIndicator from './PageIndicator'
-import { Link } from './utils'
+import Link from './utils/Link'
 
-const b = block('App')
+@block
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -21,7 +21,7 @@ export default class App extends React.Component {
     }
   }
 
-  render() {
+  render(b) {
     return (
       <main className={b}>
         <Helmet>

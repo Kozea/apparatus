@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { setClientDate } from '../actions'
 import { fetchServerDate } from '../actions/thunks'
 
-const b = block('Dates')
+@block
 class Dates extends React.Component {
   componentDidMount() {
     const { getServerDate } = this.props
@@ -25,7 +25,7 @@ class Dates extends React.Component {
     getClientDate()
   }
 
-  render() {
+  render(b) {
     const { client, server } = this.props
     return (
       <section className={b}>
