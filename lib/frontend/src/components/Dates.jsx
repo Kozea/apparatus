@@ -8,8 +8,18 @@ import { connect } from 'react-redux'
 import { setClientDate } from '../actions'
 import { fetchServerDate } from '../actions/thunks'
 
+@connect(
+  state => ({
+    client: state.date.client,
+    server: state.date.server,
+  }),
+  dispatch => ({
+    getServerDate: () => dispatch(fetchServerDate()),
+    getClientDate: () => dispatch(setClientDate(Date.now())),
+  })
+)
 @block
-class Dates extends React.Component {
+export default class Dates extends React.Component {
   componentDidMount() {
     const { getServerDate } = this.props
     getServerDate()
@@ -57,14 +67,3 @@ class Dates extends React.Component {
     )
   }
 }
-
-export default connect(
-  state => ({
-    client: state.date.client,
-    server: state.date.server,
-  }),
-  dispatch => ({
-    getServerDate: () => dispatch(fetchServerDate()),
-    getClientDate: () => dispatch(setClientDate(Date.now())),
-  })
-)(Dates)

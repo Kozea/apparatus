@@ -7,8 +7,25 @@ import { connect } from 'react-redux'
 
 import api from '../api'
 
+@connect(
+  state => ({
+    color: state.api.color,
+    shape: state.api.shape,
+  }),
+  dispatch => ({
+    sync: () =>
+      Promise.all([
+        dispatch(api.actions.color.get()),
+        dispatch(api.actions.shape.get()),
+      ]),
+    add: (type, obj) => dispatch(api.actions[type].post(obj)),
+    edit: (type, obj) =>
+      dispatch(api.actions[type].putItem({ id: obj.id }, obj)),
+    remove: (type, id) => dispatch(api.actions[type].deleteItem({ id })),
+  })
+)
 @block
-class Db extends React.Component {
+export default class Db extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -155,21 +172,3 @@ class Db extends React.Component {
     )
   }
 }
-
-export default connect(
-  state => ({
-    color: state.api.color,
-    shape: state.api.shape,
-  }),
-  dispatch => ({
-    sync: () =>
-      Promise.all([
-        dispatch(api.actions.color.get()),
-        dispatch(api.actions.shape.get()),
-      ]),
-    add: (type, obj) => dispatch(api.actions[type].post(obj)),
-    edit: (type, obj) =>
-      dispatch(api.actions[type].putItem({ id: obj.id }, obj)),
-    remove: (type, id) => dispatch(api.actions[type].deleteItem({ id })),
-  })
-)(Db)
