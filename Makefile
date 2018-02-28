@@ -9,7 +9,7 @@ make-p:
 	set -m; (for p in $(P); do ($(MAKE) $$p || kill 0)& done; wait)
 
 env:
-	# Run $RUN with Makefile environ
+	# Run ${RUN} with Makefile environ
 	$(RUN)
 
 fix-node-install:

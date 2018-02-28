@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet'
 import { Route, Switch } from 'react-router-dom'
 import { NotFound, Redirect } from 'redux-http-status'
 
+import Async from './Async'
 import Dates from './Dates'
 import Db from './Db'
 import Home from './Home'
@@ -38,6 +39,9 @@ export default class App extends React.Component {
           <Link className={b.e('link')} to="/db">
             Db
           </Link>
+          <Link className={b.e('link')} to="/async">
+            This component is async
+          </Link>
           <Link className={b.e('link')} to="/broken_link">
             This link is dead
           </Link>
@@ -49,6 +53,7 @@ export default class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route path="/date" component={Dates} />
           <Route path="/db" component={Db} />
+          <Route path="/async" component={Async} />
           <Route
             path="/old/date"
             component={() => <Redirect code={301} url="/date" />}

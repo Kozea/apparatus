@@ -17,7 +17,7 @@ import { renderHtml } from './render'
 const koaze = new Koaze({
   ...config,
   faviconPath: path.resolve(__dirname, 'favicon.png'),
-  staticDirs: [],
+  staticDirs: [config.dirs.static],
   assetsDir: config.dirs.assets,
 })
 
