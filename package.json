@@ -48,7 +48,7 @@
     "date-fns": "^2.0.0-alpha.7",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
-    "koaze": "^0.1.1",
+    "koaze": "^0.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
@@ -57,8 +57,8 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "redbox-react": "^1.5.0",
     "redux": "^3.7.2",
-    "redux-api-unrest": "^0.7.1",
-    "redux-http-status": "^0.0.10",
+    "redux-api-unrest": "^0.7.2",
+    "redux-http-status": "^0.0.11",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
@@ -87,7 +87,7 @@
     "json-loader": "^0.5.7",
     "node-sass": "^4.7.2",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.11.0",
+    "prettier": "^1.11.1",
     "react-test-renderer": "^16.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.2",
