@@ -7,7 +7,6 @@ stages:
   - build
   - test
   - deploy_test
-  - deploy_prod
 
 .artifacts: &artifacts_install
   artifacts:
@@ -23,7 +22,7 @@ stages:
       - .env/
 
 
-image: paradoxxxzero/python-node-yarn-postgresql:3.5-7.2-9.6
+image: paradoxxxzero/python-node-yarn-postgresql:3.5-9.8-10.3
 
 install3.5:
   stage: install
@@ -52,7 +51,7 @@ test3.5:
 
 
 .image: &image_latest
-  image: paradoxxxzero/python-node-yarn-postgresql:3.6-7.5-9.6
+  image: paradoxxxzero/python-node-yarn-postgresql:latest
 
 install_latest:
   <<: *image_latest
@@ -95,23 +94,11 @@ deploy_test:
   script:
     - "branch_name=`echo $CI_COMMIT_REF_NAME | tr -cd '[[:alnum:]]'`"
     - "url_test=https://test-$CI_PROJECT_NAME-$branch_name.kozea.fr"
+    - "url_test_api=https://test-$CI_PROJECT_NAME-$branch_name.kozea.fr/api"
     - "res_curl=`curl --http1.1 -m 3600 -H 'Content-Type: application/json' -X POST -d '{\"job_id\":\"'\"$CI_JOB_ID\"'\", \"token\":\"\'\"$TOKEN\"\'\", \"url\":\"\'\"$CI_REPOSITORY_URL\"\'\", \"build_stage\":\"\'\"$CI_JOB_STAGE\"\'\", \"project_name\":\"\'\"$CI_PROJECT_NAME\"\'\", \"branch\":\"\'\"$CI_COMMIT_REF_NAME\"\'\", \"password\":\"\'\"$PASSWD\"\'\", \"commit_sha\":\"\'\"$CI_COMMIT_SHA\"\'\", \"url_test\":\"\'\"$url_test\"\'\"}' $JUNKRAT | jq -r \'.success\'`"
     - "if [[ $res_curl = 1 ]]; then exit $res_curl;fi"
-    - "get=`curl -u $CI_PROJECT_NAME:$PASSWD -s -o -I -w \"%{http_code}\" $url_test`"
+    - "get=`curl -s -o -I -w \"%{http_code}\" $url_test`"
+    - "get_api=`curl -s -o -I -w \"%{http_code}\" $url_test_api`"
     - "([[ $get = 302 || $get = 200 ]] && [[ $res_curl = 0 ]]) && exit_val=0 || exit_val=1 && exit $exit_val"
+    - "([[ $get_api = 302 || $get_api = 200 ]] && [[ $res_curl = 0 ]]) && exit_val=0 || exit_val=1 && exit $exit_val"
   dependencies: []
-
-
-deploy_prod:
-  <<: *image_deploy_jobs
-  stage: deploy_prod
-  before_script:
-    - "apt-get update && apt-get install -y jq curl"
-  script:
-    - "res_curl=`curl --http1.1 -m 3600 -H 'Content-Type: application/json' -X POST -d '{\"job_id\":\"'\"$CI_JOB_ID\"'\", \"token\":\"\'\"$TOKEN\"\'\", \"build_stage\":\"\'\"$CI_JOB_STAGE\"\'\", \"project_name\":\"\'\"$CI_PROJECT_NAME\"\'\", \"branch\":\"\'\"$CI_COMMIT_REF_NAME\"\'\"}' $JUNKRAT | jq -r \'.success\'`"
-    - "if [[ $res_curl = 1 ]]; then exit $res_curl;fi"
-    - "get=`curl -s -o -I -w \"%{http_code}\" https://apparatus.kozea.fr`"
-    - "([[ $get = 302 || $get = 200 ]] && [[ $res_curl = 0 ]]) && exit_val=0 || exit_val=1 && exit $exit_val"
-  dependencies: []
-  only:
-    - master
