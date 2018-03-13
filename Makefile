@@ -16,22 +16,39 @@ fix-node-install:
 	# Rebuild node-sass on updates
 	test -d $(NODE_MODULES)/node-sass/vendor/ || npm rebuild node-sass
 
-install-node:
+check-node-binary:
+ifeq (, $(NPM))
+	echo 'You must have yarn installed'
+	exit 4
+endif
+
+check-python-binary:
+ifeq (, $(PIPENV))
+	echo 'You must have pipenv installed'
+	exit 4
+endif
+
+install-node: check-node-binary
 	$(NPM) install
 	$(MAKE) fix-node-install
 
-install-python:
-	test -d $(VENV) || virtualenv $(VENV) -p $(PYTHON_VERSION)
-	# Deps
-	$(PIP) install --trusted-host github.com --upgrade --no-cache pip setuptools -e .[test]
+install-node-prod: check-node-binary
+	$(NPM) install --prod
+	$(MAKE) fix-node-install
+
+install-python: check-python-binary
+	$(PIPENV) install --dev
+
+install-python-prod: check-python-binary
+	$(PIPENV) install --deploy
 
 install:
 	$(MAKE) P="install-node install-python" make-p
 
-install-dev:
-	$(PIP) install --upgrade devcore
+install-prod:
+	$(MAKE) P="install-node-prod install-python-prod" make-p
 
-full-install: clean-install install install-dev
+full-install: clean-install install
 
 clean-client:
 	rm -fr $(PWD)/lib/frontend/assets/*
@@ -47,12 +64,14 @@ clean-install: clean
 	rm -fr *.egg-info
 
 lint-python:
-	$(PYTEST) --flake8 --isort -m "flake8 or isort" lib --ignore=lib/frontend/static
+	$(PIPENV) run py.test --flake8 --isort -m "flake8 or isort" lib --ignore=lib/frontend/static
 
 lint-node:
 	$(NPM) run lint
 
 lint:
+	test -s $(PWD)/Pipfile.lock || (echo 'Missing Pipfile.lock file' && exit 5)
+	test -s $(PWD)/yarn.lock || (echo 'Missing yarn.lock file' && exit 6)
 	$(MAKE) P="lint-python lint-node" make-p
 
 fix-python:
@@ -65,7 +84,7 @@ fix:
 	$(MAKE) P="fix-python fix-node" make-p
 
 check-python:
-	FLASK_CONFIG=$(FLASK_TEST_CONFIG) $(PYTEST) lib $(PYTEST_ARGS)
+	FLASK_CONFIG=$(FLASK_TEST_CONFIG) $(PIPENV) run py.test lib $(PYTEST_ARGS)
 
 check-node-debug:
 	$(NPM) run test-debug
@@ -75,7 +94,7 @@ check-node:
 
 check-outdated:
 	$(NPM) outdated ||:
-	$(PIP) list --outdated --format=columns ||:
+	$(PIPENV) update --outdated ||:
 
 check: check-python check-node check-outdated
 
@@ -89,7 +108,7 @@ build: clean lint-node
 	$(MAKE) P="build-server build-client" make-p
 
 serve-python:
-	$(FLASK) run --with-threads -h $(HOST) -p $(API_PORT)
+	$(PIPENV) run flask run --with-threads -h $(HOST) -p $(API_PORT)
 
 serve-node:
 	$(NPM) run serve
@@ -113,5 +132,5 @@ serve: env-check clean
 install-db:
 	psql -U postgres -c "CREATE USER apparatus" ||:
 	psql -U postgres -c "CREATE database apparatus owner apparatus" ||:
-	$(FLASK) create_db
-	$(FLASK) insert_data
+	$(PIPENV) run flask create_db
+	$(PIPENV) run flask insert_data
