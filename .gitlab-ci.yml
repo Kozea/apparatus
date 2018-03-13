@@ -40,13 +40,17 @@ build3.5:
 
 lint3.5:
   stage: test
-  script: make lint
+  script:
+    - pip install pipenv
+    - make lint
   dependencies:
     - build3.5
 
 test3.5:
   stage: test
-  script: make check
+  script:
+    - pip install pipenv
+    - make check
   dependencies:
     - build3.5
 
@@ -73,14 +77,18 @@ build_latest:
 lint_latest:
   <<: *image_latest
   stage: test
-  script: make lint
+  script:
+    - pip install pipenv
+    - make lint
   dependencies:
     - build_latest
 
 test_latest:
   <<: *image_latest
   stage: test
-  script: make check
+  script:
+    - pip install pipenv
+    - make check
   dependencies:
     - build_latest
 
