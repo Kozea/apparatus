@@ -28,6 +28,9 @@ ifeq (, $(PIPENV))
 	exit 4
 endif
 
+check-python-environ:
+	test -d $(PWD)/.venv || (echo "Python virtual environment not found. Creating with $(PYTHON_VERSION)..." && $(PIPENV) --python $(PYTHON_VERSION))
+
 install-node: check-node-binary
 	$(NPM) install
 	$(MAKE) fix-node-install
@@ -36,10 +39,10 @@ install-node-prod: check-node-binary
 	$(NPM) install --prod
 	$(MAKE) fix-node-install
 
-install-python: check-python-binary
+install-python: check-python-binary check-python-environ
 	$(PIPENV) install --dev
 
-install-python-prod: check-python-binary
+install-python-prod: check-python-binary check-python-environ
 	$(PIPENV) install --deploy
 
 install:
@@ -49,6 +52,15 @@ install-prod:
 	$(MAKE) P="install-node-prod install-python-prod" make-p
 
 full-install: clean-install install
+
+upgrade-python:
+	$(PIPENV) update
+	$(PIPENV) lock  # Maybe remove this later
+
+upgrade-node:
+	$(NPM) upgrade-interactive --latest
+
+upgrade: upgrade-python upgrade-node
 
 clean-client:
 	rm -fr $(PWD)/lib/frontend/assets/*
