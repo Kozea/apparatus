@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default (resolve, { Loading, Error }) =>
-  class AsyncWrapper extends React.Component {
+export default (resolve, options) => {
+  const { Loading, Error } = options || {}
+
+  return class AsyncWrapper extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
@@ -44,3 +46,4 @@ export default (resolve, { Loading, Error }) =>
       return <Component {...this.props} />
     }
   }
+}
