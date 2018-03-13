@@ -12,14 +12,14 @@ stages:
   artifacts:
     paths:
       - node_modules/
-      - .env/
+      - .venv/
 
 .artifacts: &artifacts_build
   artifacts:
     paths:
       - lib/frontend/static/
       - node_modules/
-      - .env/
+      - .venv/
 
 
 image: paradoxxxzero/python-node-yarn-postgresql:3.5-9.8-10.3
@@ -27,6 +27,7 @@ image: paradoxxxzero/python-node-yarn-postgresql:3.5-9.8-10.3
 install3.5:
   stage: install
   script:
+    - pip install pipenv
     - make install
   <<: *artifacts_install
 
@@ -57,6 +58,7 @@ install_latest:
   <<: *image_latest
   stage: install
   script:
+    - pip install pipenv
     - make install
   <<: *artifacts_install
 
