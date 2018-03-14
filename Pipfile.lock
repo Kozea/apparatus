@@ -158,6 +158,7 @@
             "hashes": [
                 "sha256:5308b47021bc2340965c371f0f058cc6971a04502638d4244225c49d80db273a"
             ],
+            "markers": "python_version < '3.2'",
             "version": "==3.5.0"
         },
         "coverage": {
@@ -291,10 +292,9 @@
         },
         "log-colorizer": {
             "hashes": [
-                "sha256:1531a4f7606cd58f57fdf9211eb203065a2e4625f91191c37942b64c56c8cade",
-                "sha256:bf9daf7969dc98a84698c8461a323157617ffcf65126719f8a13cfd816371bf0"
+                "sha256:cff6a54eb213560ded0e3f62319a1a950aea8dc88557c97612607dd7380eccc2"
             ],
-            "version": "==1.8.5"
+            "version": "==1.8.6"
         },
         "log-colorizer-hook": {
             "hashes": [
