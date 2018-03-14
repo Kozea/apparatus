@@ -70,7 +70,6 @@ deploy_test:
     - "stdbuf -o 0 curl --http1.1 -m 3600 -N -s -H 'Content-Type: application/json' -X POST -d '{\"job_id\":\"'\"$CI_JOB_ID\"'\", \"token\":\"\'\"$TOKEN\"\'\", \"url\":\"\'\"$CI_REPOSITORY_URL\"\'\", \"build_stage\":\"\'\"$CI_JOB_STAGE\"\'\", \"project_name\":\"\'\"$CI_PROJECT_NAME\"\'\", \"branch\":\"\'\"$CI_COMMIT_REF_NAME\"\'\", \"password\":\"\'\"$PASSWD\"\'\", \"commit_sha\":\"\'\"$CI_COMMIT_SHA\"\'\", \"url_test\":\"\'\"$url_test\"\'\"}' $JUNKRAT | tee $output_file"
     - "[[ $(tail -n1 $output_file) == 'Success' ]] || exit 1"
     - "get=`curl -s -o -I -w \"%{http_code}\" $url_test`"
-    - "exit $([[ $get = 302 || $get = 200 ]])"
     - "get_api=`curl -s -o -I -w \"%{http_code}\" $url_test_api`"
-    - "exit $([[ $get_api = 302 || $get_api = 200 ]])"
+    - "exit $([[ ($get = 302 || $get = 200) && ($get_api = 302 || $get_api = 200)]])"
   dependencies: []
