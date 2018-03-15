@@ -69,7 +69,7 @@ deploy_test:
     - 'url_test=https://test-$CI_PROJECT_NAME-$branch_name-36.kozea.fr'
     - 'url_test_api=https://test-$CI_PROJECT_NAME-$branch_name-36.kozea.fr/api/date.json'
     - 'parameters="{\"job_id\":\"$CI_JOB_ID\", \"token\":\"$TOKEN\", \"url\":\"$CI_REPOSITORY_URL\", \"build_stage\":\"$CI_JOB_STAGE\", \"project_name\":\"$CI_PROJECT_NAME\", \"branch\":\"$CI_COMMIT_REF_NAME\", \"password\":\"$PASSWD\", \"commit_sha\":\"$CI_COMMIT_SHA\", \"url_test\":\"$url_test\"}"'
-    - 'swget=wget --no-verbose --content-on-error -O-'
+    - 'swget="wget --no-verbose --content-on-error -O-"'
     - '$swget --header="Content-Type:application/json" --post-data="""$parameters""" $JUNKRAT | tee $output_file && [[ $(tail -n1 $output_file) == "Success" ]]'
     - '$swget $url_test'
     - '$swget $url_test_api'
