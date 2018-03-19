@@ -116,7 +116,7 @@ build-client: clean-client
 build-server: clean-server
 	$(NPM) run build-server
 
-build: clean lint-node
+build: clean
 	$(MAKE) P="build-server build-client" make-p
 
 serve-python:
