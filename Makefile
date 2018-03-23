@@ -56,6 +56,7 @@ full-install: clean-install install
 upgrade-python:
 	$(PIPENV) update
 	$(PIPENV) lock  # Maybe remove this later
+	$(PIPENV) install
 
 upgrade-node:
 	$(NPM) upgrade-interactive --latest
@@ -87,7 +88,7 @@ lint:
 	$(MAKE) P="lint-python lint-node" make-p
 
 fix-python:
-	$(VENV)/bin/yapf -p -i lib/**/*.py
+	$(PIPENV) run yapf -vv -p -i lib/**/*.py
 
 fix-node:
 	$(NPM) run fix
