@@ -14,5 +14,6 @@ dist/
 lib/backend/application-custom.cfg
 lib/frontend/assets/
 lib/frontend/static/
-Makefile.custom.config
 node_modules/
+base.Makefile
+config.custom.Makefile
