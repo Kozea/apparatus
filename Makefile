@@ -12,9 +12,8 @@ include $(BASENAME)
 endif
 
 
-
 install-db: install-db-super ## install-db: Install apparatus database
-	$(call target_log)
+	$(LOG)
 	psql -U postgres -c "CREATE USER apparatus" ||:
 	psql -U postgres -c "CREATE database apparatus owner apparatus" ||:
 	$(PIPENV) run flask create_db
