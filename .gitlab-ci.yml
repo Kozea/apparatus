@@ -62,7 +62,7 @@ deploy_test:
   stage: deploy_test
   before_script:
     - apt-get update
-    - apt-get install -y wget
+    - apt-get install -y wget make
   script:
     - make deploy-test
   dependencies: []
