@@ -20,3 +20,5 @@ export PIPENV_VENV_IN_PROJECT = 1
 # Node env
 NODE_MODULES = $(PWD)/node_modules
 NPM ?= $(shell command -v yarn 2> /dev/null)
+
+URL_TEST_API = https://test-$(CI_PROJECT_NAME)-$(BRANCH_NAME).kozea.fr/api/date.json
