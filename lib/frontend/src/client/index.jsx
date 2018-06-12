@@ -1,24 +1,21 @@
-import { createBrowserHistory } from 'history'
 import React from 'react'
 import { hydrate, render } from 'react-dom'
-import { routerMiddleware } from 'react-router-redux'
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 import RedBox from 'redbox-react'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
 import App from '../components/App'
-import Root from '../components/Root'
 import reducer from '../reducer'
 
 export const rootNode = document.getElementById('root')
-
-export const history = createBrowserHistory()
 
 export const store = createStore(
   reducer,
   window.__STATE__, // Server state
   (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose)(
-    applyMiddleware(routerMiddleware(history), thunk)
+    applyMiddleware(thunk)
   )
 )
 
@@ -30,9 +27,11 @@ const renderRoot = handleError => {
         ? render
         : hydrate
     renderMode(
-      <Root store={store} history={history}>
-        <App />
-      </Root>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>,
       rootNode
     )
   } catch (error) {

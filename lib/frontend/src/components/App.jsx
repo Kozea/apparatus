@@ -4,12 +4,13 @@ import block from 'bemboo'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Route, Switch } from 'react-router-dom'
-import { NotFound, Redirect } from 'redux-http-status'
 
+import { Redirect } from '../utils'
 import Async from './Async'
 import Dates from './Dates'
 import Db from './Db'
 import Home from './Home'
+import NotFound from './NotFound'
 import PageIndicator from './PageIndicator'
 import Link from './utils/Link'
 
@@ -50,14 +51,11 @@ export default class App extends React.Component {
           </Link>
         </nav>
         <Switch>
+          <Redirect status={303} from="/old/date" to="/date" />
           <Route exact path="/" component={Home} />
           <Route path="/date" component={Dates} />
           <Route path="/db" component={Db} />
           <Route path="/async" component={Async} />
-          <Route
-            path="/old/date"
-            component={() => <Redirect code={301} url="/date" />}
-          />
           <Route component={NotFound} />
         </Switch>
         <PageIndicator />

@@ -1,15 +1,14 @@
 import path from 'path'
 
-import { createMemoryHistory } from 'history'
 import Koaze from 'koaze'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { routerMiddleware } from 'react-router-redux'
+import { Provider } from 'react-redux'
+import { StaticRouter } from 'react-router-dom'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
 import App from './components/App'
-import Root from './components/Root'
 import * as config from './config'
 import reducer from './reducer'
 import { renderHtml } from './render'
@@ -22,24 +21,23 @@ const koaze = new Koaze({
 })
 
 koaze.router.get('/*', ctx => {
-  const history = createMemoryHistory({ initialEntries: [ctx.url] })
-  const store = createStore(
-    reducer,
-    compose(applyMiddleware(routerMiddleware(history), thunk))
-  )
+  const store = createStore(reducer, compose(applyMiddleware(thunk)))
+  const staticContext = {}
 
   // Render app and get side effects
   const app = renderToString(
-    <Root store={store} history={history}>
-      <App />
-    </Root>
+    <Provider store={store}>
+      <StaticRouter location={ctx.url} context={staticContext}>
+        <App />
+      </StaticRouter>
+    </Provider>
   )
-  // Get status from side effect
-  const { status } = store.getState()
-  ctx.status = status.code
 
-  if ([301, 302].includes(status.code)) {
-    ctx.redirect(status.url)
+  // Get status from side effect
+  ctx.status = staticContext.status || 200
+
+  if ([301, 302].includes(staticContext.status) && staticContext.url) {
+    ctx.redirect(staticContext.url)
     return
   }
 
