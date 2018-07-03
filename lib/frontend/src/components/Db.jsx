@@ -4,6 +4,7 @@ import block from 'bemboo'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
+import Formol, { Field } from 'formol'
 
 import api from '../api'
 
@@ -32,7 +33,12 @@ export default class Db extends React.Component {
       color: {},
       shape: {},
     }
+    this.handleColorDelete = this.handleDelete('color')
+    this.handleShapeDelete = this.handleDelete('shape')
+    this.handleColorSubmit = this.handleSubmit('color')
+    this.handleShapeSubmit = this.handleSubmit('shape')
   }
+
   async componentDidMount() {
     const { sync } = this.props
     await sync()
@@ -40,34 +46,32 @@ export default class Db extends React.Component {
     console.log('I am synced')
   }
 
-  handleChange(type, key, val) {
-    this.setState({ [type]: { ...this.state[type], [key]: val } })
+  handleDelete(type) {
+    return id => this.props.remove(type, id)
   }
 
-  handleDelete(type, id) {
-    const { remove } = this.props
-    remove(type, id)
-  }
-
-  async handleSubmit(type, e) {
-    e.preventDefault()
-    const { add, edit } = this.props
-    const obj = this.state[type]
-    obj.name = obj.name || null
-    try {
-      if (obj.id === void 0) {
-        await add(type, obj, () => this.setState({ [type]: {} }))
-      } else {
-        await edit(type, obj, () => this.setState({ [type]: {} }))
+  handleSubmit(type) {
+    return async (transientItem, item) => {
+      const { add, edit } = this.props
+      try {
+        if (item.id === void 0) {
+          await add(type, transientItem, () => this.setState({ [type]: {} }))
+        } else {
+          await edit(type, { ...item, ...transientItem }, () =>
+            this.setState({ [type]: {} })
+          )
+        }
+      } catch (error) {
+        console.error(error)
       }
-    } catch (error) {
-      console.error(error)
+      this.setState({ [type]: {} })
+      return {}
     }
-    this.setState({ [type]: {} })
   }
 
   render(b) {
     const { color, shape } = this.props
+    const { color: colorItem, shape: shapeItem } = this.state
     return (
       <section className={b}>
         <Helmet>
@@ -84,7 +88,7 @@ export default class Db extends React.Component {
                 <button onClick={() => this.setState({ color: c })}>
                   Edit
                 </button>
-                <button onClick={() => this.handleDelete('color', c.id)}>
+                <button onClick={() => this.handleColorDelete(c.id)}>
                   Remove
                 </button>
               </div>
@@ -99,7 +103,7 @@ export default class Db extends React.Component {
                 <button onClick={() => this.setState({ shape: s })}>
                   Edit
                 </button>
-                <button onClick={() => this.handleDelete('shape', s.id)}>
+                <button onClick={() => this.handleShapeDelete(s.id)}>
                   Remove
                 </button>
               </div>
@@ -110,62 +114,28 @@ export default class Db extends React.Component {
         <div className={b.e('forms')}>
           <div className={b.e('color')}>
             <h2>Color</h2>
-            <form onSubmit={e => this.handleSubmit('color', e)}>
-              <input
-                name="name"
-                placeholder="name"
-                value={this.state.color.name || ''}
-                onChange={e =>
-                  this.handleChange('color', 'name', e.target.value)
-                }
-              />
-              <input
-                name="hex"
-                placeholder="hex"
-                value={this.state.color.hex || ''}
-                onChange={e =>
-                  this.handleChange('color', 'hex', e.target.value)
-                }
-              />
-              <input
-                name="rgb"
-                placeholder="rgb"
-                value={this.state.color.rgb || ''}
-                onChange={e =>
-                  this.handleChange('color', 'rgb', e.target.value)
-                }
-              />
-              <input
-                type="submit"
-                value={this.state.color.id === void 0 ? 'Add' : 'Edit'}
-              />
-            </form>
+            <Formol
+              item={colorItem}
+              onSubmit={this.handleColorSubmit}
+              submitText={colorItem.id ? 'Edit' : 'Add'}
+            >
+              <Field>Name</Field>
+              <Field>Hex</Field>
+              <Field>Rgb</Field>
+            </Formol>
           </div>
           <div className={b.e('shape')}>
             <h2>Shape</h2>
-            <form onSubmit={e => this.handleSubmit('shape', e)}>
-              <input
-                name="name"
-                placeholder="name"
-                value={this.state.shape.name || ''}
-                onChange={e =>
-                  this.handleChange('shape', 'name', e.target.value)
-                }
-              />
-              <input
-                name="sides"
-                placeholder="sides"
-                value={this.state.shape.sides || ''}
-                type="number"
-                onChange={e =>
-                  this.handleChange('shape', 'sides', e.target.value)
-                }
-              />
-              <input
-                type="submit"
-                value={this.state.shape.id === void 0 ? 'Add' : 'Edit'}
-              />
-            </form>
+            <Formol
+              item={shapeItem}
+              onSubmit={this.handleShapeSubmit}
+              submitText={shapeItem.id ? 'Edit' : 'Add'}
+            >
+              <Field>Name</Field>
+              <Field type="range" min={0} max={42}>
+                Sides
+              </Field>
+            </Formol>
           </div>
         </div>
       </section>
