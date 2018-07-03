@@ -15,7 +15,7 @@ import PageIndicator from './PageIndicator'
 import Link from './utils/Link'
 
 @block
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {

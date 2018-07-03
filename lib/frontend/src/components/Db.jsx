@@ -26,7 +26,7 @@ import api from '../api'
   })
 )
 @block
-export default class Db extends React.Component {
+export default class Db extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {

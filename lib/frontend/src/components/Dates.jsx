@@ -19,18 +19,23 @@ import { fetchServerDate } from '../actions/thunks'
   })
 )
 @block
-export default class Dates extends React.Component {
+export default class Dates extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.handleRefreshClient = this.handleRefreshClient.bind(this)
+    this.handleRefreshServer = this.handleRefreshServer.bind(this)
+  }
   componentDidMount() {
     const { getServerDate } = this.props
     getServerDate()
   }
 
-  refreshServer() {
+  handleRefreshServer() {
     const { getServerDate } = this.props
     getServerDate()
   }
 
-  refreshClient() {
+  handleRefreshClient() {
     const { getClientDate } = this.props
     getClientDate()
   }
@@ -49,16 +54,12 @@ export default class Dates extends React.Component {
         ) : (
           <p>It’s {server} o’clock on server</p>
         )}
-        <button onClick={() => this.refreshClient()}>
-          Refresh client date
-        </button>
-        <button onClick={() => this.refreshServer()}>
-          Refresh server date
-        </button>
+        <button onClick={this.handleRefreshClient}>Refresh client date</button>
+        <button onClick={this.handleRefreshServer}>Refresh server date</button>
         <button
           onClick={() => {
-            this.refreshServer()
-            this.refreshClient()
+            this.handleRefreshServer()
+            this.handleRefreshClient()
           }}
         >
           Refresh both
