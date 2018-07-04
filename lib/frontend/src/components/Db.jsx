@@ -119,7 +119,7 @@ export default class Db extends React.PureComponent {
               onSubmit={this.handleColorSubmit}
               submitText={colorItem.id ? 'Edit' : 'Add'}
             >
-              <Field>Name</Field>
+              <Field required>Name</Field>
               <Field>Hex</Field>
               <Field>Rgb</Field>
             </Formol>
@@ -131,8 +131,8 @@ export default class Db extends React.PureComponent {
               onSubmit={this.handleShapeSubmit}
               submitText={shapeItem.id ? 'Edit' : 'Add'}
             >
-              <Field>Name</Field>
-              <Field type="range" min={0} max={42}>
+              <Field required>Name</Field>
+              <Field required type="range" min={0} max={42}>
                 Sides
               </Field>
             </Formol>
