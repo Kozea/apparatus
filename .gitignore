@@ -17,3 +17,4 @@ lib/frontend/static/
 node_modules/
 base.Makefile
 config.custom.Makefile
+.venv
