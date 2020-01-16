@@ -1,6 +1,10 @@
-variables:
-  PYTHON_VERSION: python
-  STAGING: y
+include:
+  - remote: 'https://gitlab.com/Kozea/ci-master/raw/master/.variables-images.yml'
+  - remote: 'https://gitlab.com/Kozea/ci-master/raw/master/.ci-install.yml'
+  - remote: 'https://gitlab.com/Kozea/ci-master/raw/master/.ci-build.yml'
+  - remote: 'https://gitlab.com/Kozea/ci-master/raw/master/.ci-lint.yml'
+  - remote: 'https://gitlab.com/Kozea/ci-master/raw/master/.ci-test.yml'
+  - remote: 'https://gitlab.com/Kozea/ci-master/raw/master/.ci-deploy-test.yml'
 
 stages:
   - install
@@ -21,45 +25,15 @@ stages:
       - node_modules/
       - .venv/
 
-image: kozea/python-node-yarn-postgresql:latest
-
-install_latest:
-  stage: install
-  script:
-    - pip install pipenv
-    - make install
+install:
   <<: *artifacts_install
 
-build_latest:
-  stage: build
-  script: make build
+build:
   <<: *artifacts_build
+
+lint:
   dependencies:
-    - install_latest
+    - build
 
-lint_latest:
-  stage: test
-  script:
-    - pip install pipenv
-    - make lint
+test:
   dependencies:
-    - build_latest
-
-test_latest:
-  stage: test
-  script:
-    - pip install pipenv
-    - make check
-  dependencies:
-    - build_latest
-
-
-.image: &image_deploy_jobs
-  image: kozea/deploy-tools:latest
-
-deploy_test:
-  <<: *image_deploy_jobs
-  stage: deploy_test
-  script:
-    - make deploy-test
-  dependencies: []
