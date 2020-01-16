@@ -20,3 +20,6 @@ pytest-cov = "*"
 pytest-isort = "*"
 pytest = "*"
 devcore = "*"
+
+[requires]
+python_version = "3.7"
