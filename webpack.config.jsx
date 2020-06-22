@@ -11,7 +11,6 @@ const webpackConfig = getBaseConfig(config, renderHtml)
 webpackConfig.module.rules[0].include = [
   webpackConfig.module.rules[0].include,
   path.join(config.dirs.modules, 'formol'),
-  path.join(config.dirs.modules, 'redux-api-unrest'),
 ]
 
 export default webpackConfig
