@@ -6,19 +6,22 @@ include:
   - remote: 'https://gitlab.com/Kozea/ci-master/raw/master/.ci-test.yml'
   - remote: 'https://gitlab.com/Kozea/ci-master/raw/master/.ci-deploy-test.yml'
 
+.image_test_jobs:
+  image: kozea/python-node-yarn-postgresql:latest
+
 stages:
   - install
   - build
   - test
   - deploy_test
 
-.artifacts: &artifacts_install
+.artifacts_install: &artifacts_install
   artifacts:
     paths:
       - node_modules/
       - .venv/
 
-.artifacts: &artifacts_build
+.artifacts_build: &artifacts_build
   artifacts:
     paths:
       - lib/frontend/static/
@@ -30,10 +33,3 @@ install:
 
 build:
   <<: *artifacts_build
-
-lint:
-  dependencies:
-    - build
-
-test:
-  dependencies:

@@ -12,10 +12,7 @@ export FLASK_TEST_CONFIG ?= $(PWD)/lib/backend/application-test.cfg
 export FLASK_DEBUG ?= 1
 
 # Python env
-PYTHON_VERSION ?= python
-PIPENV ?= $(shell command -v pipenv 2> /dev/null)
-VENV = $(PWD)/.venv
-export PIPENV_VENV_IN_PROJECT = 1
+PYTHON ?= python3.8
 
 # Node env
 NODE_MODULES = $(PWD)/node_modules
