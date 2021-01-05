@@ -26,10 +26,6 @@ const getManifest = () => {
 const getAssets = () => {
   if (!Object.keys(assets).length) {
     assets.links = []
-    assets.scripts = [
-      'https://polyfill.kozea.fr/polyfill.min.js' +
-        '?features=es2016,es2017,default',
-    ]
     const scripts = ['runtime.js', 'vendors.js', 'client.js']
     const links = config.debug ? [] : ['client.css']
     const transform = config.debug
@@ -37,7 +33,7 @@ const getAssets = () => {
       : f => `${getManifest()[f]}`
 
     assets.links = [...assets.links, ...links.map(transform)]
-    assets.scripts = [...assets.scripts, ...scripts.map(transform)]
+    assets.scripts = [...scripts.map(transform)]
   }
   return assets
 }
