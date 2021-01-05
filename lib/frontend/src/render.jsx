@@ -30,7 +30,7 @@ const getAssets = () => {
       'https://polyfill.kozea.fr/polyfill.min.js' +
         '?features=es2016,es2017,default',
     ]
-    const scripts = ['runtime~client.js', 'vendors~client.js', 'client.js']
+    const scripts = ['runtime.js', 'vendors.js', 'client.js']
     const links = config.debug ? [] : ['client.css']
     const transform = config.debug
       ? f => `${config.publicPath}${f}`
@@ -52,7 +52,7 @@ export const renderHtml = (app, store) =>
         }
       }
       links={getAssets().links}
-      scripts={getAssets().scripts}
+      scripts={app ? getAssets().scripts : []}
       app={app}
     />
   )}`
