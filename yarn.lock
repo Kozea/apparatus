@@ -10074,10 +10074,10 @@ webpack@^5.11.1:
     watchpack "^2.0.0"
     webpack-sources "^2.1.1"
 
-webpackozea@^1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/webpackozea/-/webpackozea-1.0.0-rc.1.tgz#baf9fa3d3eea0d95ac258ba39409c888ceba5071"
-  integrity sha512-DDpnsRJlNCpLbFa+xUn2IhxdPcL0uwo1+jxl/jVSiSsPSyKyttB6RXnVIAUnKr97177XE+GFwc3E6/7iLGCEyA==
+webpackozea@^1.0.0-rc.2:
+  version "1.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/webpackozea/-/webpackozea-1.0.0-rc.2.tgz#529fb4dabcc73d69ee5304f2566f24a86b7a0b47"
+  integrity sha512-ckSFRccHxGiX8fXVWFMxONEZ9ylOhC3QorQWcwrFDZVDqMX9PbZ7Oko31SJR/V24ma8fyJ2jRG4l+k1hy22IeQ==
   dependencies:
     chalk "^4.1.0"
 
