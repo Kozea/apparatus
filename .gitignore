@@ -19,3 +19,5 @@ base.Makefile
 config.custom.Makefile
 .venv
 .python-version
+.yalc/
+yalc.lock

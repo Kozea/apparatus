@@ -1,16 +1,51 @@
-import path from 'path'
+import { getBaseConfigClient, getBaseConfigServer } from 'webpackozea'
 
-import getBaseConfig from 'webpackozea'
+import { renderHtml } from './lib/frontend/src/render'
+import {
+  apiUrl,
+  assetsUrl,
+  cwd,
+  debug,
+  dirs,
+  forcePolyfill,
+  inspect,
+  publicPath,
+  serverUrl,
+  staging,
+  verbose,
+} from './lib/frontend/src/config'
 
-import * as config from './lib/frontend/src/config'
-// eslint-disable-next-line import/extensions
-import { renderHtml } from './lib/frontend/src/render.jsx'
+// eslint-disable-next-line
+let webpackConfig
 
-const webpackConfig = getBaseConfig(config, renderHtml)
-
-webpackConfig.module.rules[0].include = [
-  webpackConfig.module.rules[0].include,
-  path.join(config.dirs.modules, 'formol'),
-]
+if (process.env.WEBPACK_ENV === 'server') {
+  const serverConfig = {
+    apiUrl,
+    assetsUrl,
+    cwd,
+    debug,
+    dirs,
+    inspect,
+    publicPath,
+    serverUrl,
+    staging,
+    verbose,
+  }
+  webpackConfig = getBaseConfigServer(serverConfig)
+} else {
+  const clientConfig = {
+    apiUrl,
+    assetsUrl,
+    debug,
+    dirs,
+    forcePolyfill,
+    publicPath,
+    serverUrl,
+    staging,
+    verbose,
+    additionalIncludes: ['formol'],
+  }
+  webpackConfig = getBaseConfigClient(clientConfig, renderHtml)
+}
 
 export default webpackConfig
